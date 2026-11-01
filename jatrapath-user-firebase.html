@@ -1364,6 +1364,11 @@ const pubList = (a) => a.map((b) => pub(b));
 function byPop(days, status) {
   return texts().filter((b) => !status || b.status === status).map((b) => ({ b, n: sumDays(b.id, days) })).filter((x) => x.n > 0).sort((a, c) => c.n - a.n).map((x) => Object.assign(pub(x.b), { periodReads: x.n }));
 }
+/* ক্যাটাগরির নাম এক করা: ইসলামিক/ইসলাইক ইত্যাদি একটাই হবে; বাচ্চাদের/শিশুদের জনপ্রিয় ক্যাটাগরি বাদ */
+const catBanned = (n) => /বাচ্চা|শিশু|কিডস|\bkids?\b/i.test(String(n || ''));
+const canonCat = (n) => { n = String(n || '').replace(/\s+/g, ' ').trim(); return /ইসলা/.test(n) ? 'ইসলামিক' : n; };
+const catKey = (n) => canonCat(n).replace(/\s+/g, '').replace(/ী/g, 'ি').replace(/ূ/g, 'ু');
+const cleanCats = (arr) => { const seen = {}; return (arr || []).map(canonCat).filter((n) => { const k = catKey(n); if (!n || catBanned(n) || seen[k]) return false; seen[k] = 1; return true; }); };
 const lastD = (b) => Math.max(...b.chapters.map((c) => c.d || 0), Date.parse(b.publishedAt) || 0);
 function listFor(key, status) {
   switch (key) {
@@ -1373,12 +1378,13 @@ function listFor(key, status) {
     case 'weekly': return man('w', status) || byPop(7, status);
     case 'monthly': return man('m', status) || byPop(30, status);
     case 'yearly': return man('y', status) || byPop(365, status);
+    case 'popular': return pubList(texts().filter((b) => !status || b.status === status).sort((a, c) => (c.reads || 0) - (a.reads || 0)));
     case 'islamic': return pubList(texts().filter((b) => b.cat === 'ইসলামিক'));
     default: { if (/^cat:/.test(key)) { const cn = key.slice(4); return pubList(texts().filter((b) => b.cat === cn)); } const s = (db.config.homeSections || []).find((x) => x.key === key); return s ? pubList(texts().filter((b) => s.cats.includes(b.cat))) : null; }
   }
 }
-const TITLES = { featured: 'নির্বাচিত উপন্যাস', recent: 'সম্প্রতি যোগ করা', latest: 'সর্বশেষ এপিসোড', weekly: 'সাপ্তাহিক জনপ্রিয়', monthly: 'মাসিক জনপ্রিয়', yearly: 'বাৎসরিক জনপ্রিয়', islamic: 'ইসলামিক উপন্যাস' };
-const FILTERABLE = ['weekly', 'monthly', 'yearly'];
+const TITLES = { featured: 'নির্বাচিত উপন্যাস', recent: 'সম্প্রতি যোগ করা', latest: 'সর্বশেষ এপিসোড', weekly: 'সাপ্তাহিক জনপ্রিয়', monthly: 'মাসিক জনপ্রিয়', yearly: 'বাৎসরিক জনপ্রিয়', popular: 'সবচেয়ে জনপ্রিয় বই', islamic: 'ইসলামিক উপন্যাস' };
+const FILTERABLE = ['weekly', 'popular'];
 
 function handleSync(method, full, body, user) {
   load();
@@ -1403,16 +1409,16 @@ function handleSync(method, full, body, user) {
     out.sort((a, b) => b.t - a.t); return out.slice(0, 60);
   }
   if (method === 'GET' && p === '/settings') return db.settings;
-  if (method === 'GET' && p === '/categories') return db.categories.map((c, i) => ({ name: c, count: texts().filter((b) => b.cat === c).length, i })).sort((x, y) => ((x.count > 0 ? 0 : 1) - (y.count > 0 ? 0 : 1)) || (x.i - y.i)).map((c) => ({ name: c.name, count: c.count }));
+  if (method === 'GET' && p === '/categories') return db.categories.map((c, i) => ({ name: c, count: texts().filter((b) => b.cat === c).length, i })).sort((x, y) => ((y.name === 'রোমান্টিক') - (x.name === 'রোমান্টিক')) || ((x.count > 0 ? 0 : 1) - (y.count > 0 ? 0 : 1)) || (x.i - y.i)).map((c) => ({ name: c.name, count: c.count }));
   if (method === 'GET' && p === '/home') {
     const sections = [];
-    ['featured', 'recent', 'latest', 'weekly', 'monthly', 'yearly', 'islamic'].forEach((k) => {
+    ['featured', 'recent', 'latest', 'weekly', 'popular'].forEach((k) => {
       let books = listFor(k); const total = books.length; if (k !== 'featured') books = books.slice(0, 10);
       sections.push({ key: k, title: TITLES[k], books, total, filter: FILTERABLE.indexOf(k) >= 0 });
     });
     // অ্যাডমিনের তৈরি প্রতিটি ক্যাটাগরি হোমের নিচে নিজের নামে সেকশন হিসেবে আসবে; বই না থাকলে "কোনো বই নেই" লেখা দেখাবে
-    (db.categories || []).forEach((name) => {
-      if (name === 'ইসলামিক') return; // ইসলামিক আলাদা সেকশনে আছে
+    // রোমান্টিক সবার আগে, বাকি সব তৈরি ক্যাটাগরি (হুমায়ূন আহমেদ ইত্যাদি) তার নিচে
+    (db.categories || []).slice().sort((a, b) => (b === 'রোমান্টিক') - (a === 'রোমান্টিক')).forEach((name) => {
       const all = texts().filter((b) => b.cat === name);
       sections.push({ key: 'cat:' + name, title: name, books: pubList(all.slice(0, 10)), total: all.length, filter: false });
     });
@@ -1473,12 +1479,12 @@ async function loadDb() {
   const [cs, bs, ns, ss, cf] = await Promise.all([g(C('categories')), g(C('books').where('pub', '==', true)), g(C('notices')), g(C('stats')), g(C('config'))]);
   const cfg = {}; cf.forEach((d) => { cfg[d.id] = d.data(); }); const stats = {}; ss.forEach((d) => { stats[d.id] = d.data().days || {}; });
   const books = bs.docs.filter((d) => d.data().type !== 'voice').map((d) => { const x = d.data(); const voice = false;
-    return { id: d.id, title: x.title || '', author: x.author || '', authorId: x.ownerUid || '', authorPhoto: x.authorPhoto || '', cat: x.cat || '', status: x.status || 'চলমান', desc: x.desc || '', cover: x.cover || null, featured: !!x.featured,
+    return { id: d.id, title: x.title || '', author: x.author || '', authorId: x.ownerUid || '', authorPhoto: x.authorPhoto || '', cat: canonCat(x.cat || ''), status: x.status || 'চলমান', desc: x.desc || '', cover: x.cover || null, featured: !!x.featured,
       publishedAt: x.publishedAt || new Date().toISOString(), reads: x.reads || 0, likes: x.likes || 0, dislikes: x.dislikes || 0, favs: x.favs || 0, cmts: x.cmts || 0, thanks: x.thanks || 0, type: voice ? 'audio' : 'text',
       chapters: voice ? [] : (x.chs || []).filter((c) => c.p && (!c.sc || c.sc <= Date.now())).sort((a, b) => a.n - b.n).map((c) => ({ n: c.n, cid: c.id, title: c.t, d: c.d || 0 })),
       audio: (x.audio || []).filter((a) => a.p).sort((a, b) => a.n - b.n).map((a) => ({ n: a.n, title: a.title, src: a.url })) }; });
   const home = [];
-  db = { categories: cs.docs.map((d) => d.data().name), books, stats, reactions: {}, lists: cfg.lists || {}, settings: Object.assign({}, window.JP_SEEDLIB.DEFAULT_SETTINGS, cfg.settings || {}),
+  db = { categories: cleanCats(cs.docs.map((d) => d.data().name)), books, stats, reactions: {}, lists: cfg.lists || {}, settings: Object.assign({}, window.JP_SEEDLIB.DEFAULT_SETTINGS, cfg.settings || {}),
     notices: ns.docs.map((d) => Object.assign({ id: d.id }, d.data())), config: { homeSections: home } };
   const lr = LS.get('jp_react'), rs = LS.get('jp_rsync');
   books.forEach((b) => { INCL[b.id] = rs[b.id] || null; if (b.id in lr) { adjR(b, INCL[b.id], lr[b.id] || null); INCL[b.id] = lr[b.id] || null; db.reactions[b.id] = { [uid0]: lr[b.id] }; } });
@@ -1718,6 +1724,12 @@ function nav(path, replace) {
   if (!replace) navStack.push(curPath);
   curPath = path; setUrl(path, replace); route();
 }
+/* নিচের ট্যাব (হোম/পোস্ট/ক্যাটাগরি/লাইব্রেরি) এক স্তরের পাতা: ট্যাব বদলালে ব্যাক-স্ট্যাক নতুন করে শুরু হয়, তাই ব্যাক দিলে একই দুই পাতায় ঘুরপাক খায় না */
+function navTab(path) {
+  path = String(path || '/'); if (path === curPath) { route(); return; }
+  scrollMem[curPath] = window.scrollY; navStack.length = 0; if (path !== '/') navStack.push('/');
+  curPath = path; setUrl(path, true); route();
+}
 function goBack() {
   const wasRead = /^\/read\//.test(curPath); if (wasRead) setTimeout(() => adShow('back', 45000), 350);
   if (navStack.length) { restoreOnce = true; curPath = navStack.pop(); setUrl(curPath, true); route(); } else nav('/', true);
@@ -1742,11 +1754,12 @@ function onPop(ev) {
   if (exitOpen) { hideDialog(); try { history.pushState({ jp: 1 }, '', '#' + curPath); } catch (e) { /* ignore */ } goHomeFromExit(); return; }
   if (!$('#dlg').hidden) { hideDialog(); try { history.pushState({ jp: 1 }, '', '#' + curPath); } catch (e) { /* ignore */ } return; }
   if (sheetOpen() || drawerOpen()) { closeSheet(); closeDrawer(); try { history.pushState({ jp: 1 }, '', '#' + curPath); } catch (e) { /* ignore */ } return; }
-  const p = (location.hash || '#/').slice(1) || '/';
+  let p = (location.hash || '#/').slice(1) || '/';
   if (p === curPath) return;
   if (/^\/read\//.test(curPath)) setTimeout(() => adShow('back', 45000), 350);
   restoreOnce = true;
-  if (navStack.length && navStack[navStack.length - 1] === p) navStack.pop();
+  if (ev && ev.type === 'popstate' && (navStack.length || curPath !== '/')) { p = navStack.length ? navStack.pop() : '/'; setUrl(p, true); } // ব্যাক = অ্যাপের নিজের স্ট্যাক অনুযায়ী
+  else if (navStack.length && navStack[navStack.length - 1] === p) navStack.pop();
   curPath = p; route();
 }
 function parseHash() {
@@ -3955,7 +3968,7 @@ async function onClick(ev) {
   const act = el.dataset.act; const d = el.dataset;
   try {
     switch (act) {
-      case 'go': nav(d.href, !!d.replace); break;
+      case 'go': if (d.nav) navTab(d.href); else nav(d.href, !!d.replace); break;
       case 'fav-q': el.classList.toggle('on', toggleSaved(d.id)); break;
       case 'bm-r': el.classList.toggle('on', toggleSaved(rd.id)); break;
       case 'share-ch': await doShare(rd.bookTitle + ' — ' + rd.title, pageUrl('/read/' + enc(rd.id) + '/' + rd.n)); break;
