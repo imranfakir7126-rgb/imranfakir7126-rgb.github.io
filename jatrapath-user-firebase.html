@@ -2231,21 +2231,8 @@ document.addEventListener('click', (e) => {
 }, true);
 function wAfter(seg) { if (seg[1] === 'ch') wUpdBar(); }
 
-/* ---------- মোবাইলে ফুল স্ক্রিন ---------- */
-(function () {
-  const de = document.documentElement;
-  const isFs = () => !!(document.fullscreenElement || document.webkitFullscreenElement);
-  const enter = () => { if (isFs() || sessionStorage.getItem('jp_fs_off') === '1') return; const r = de.requestFullscreen || de.webkitRequestFullscreen; if (!r) return; try { const p = r.call(de, { navigationUI: 'hide' }); if (p && p.catch) p.catch(() => {}); } catch (e) { /* ignore */ } };
-  // ব্রাউজার শর্ত: ফুল স্ক্রিনের জন্য ইউজারের প্রথম ট্যাপ লাগে
-  const once = () => { enter(); };
-  document.addEventListener('click', once, { once: true, passive: true });
-  document.addEventListener('touchend', once, { once: true, passive: true });
-  // ইউজার নিজে ফুল স্ক্রিন থেকে বের হলে আর জোর করে ঢোকানো হবে না; অ্যাপ আবার খুললে আবার চালু হবে
-  let fsWas = false;
-  const chg = () => { if (isFs()) { fsWas = true; sessionStorage.removeItem('jp_fs_off'); } else if (fsWas) { fsWas = false; sessionStorage.setItem('jp_fs_off', '1'); } };
-  document.addEventListener('fullscreenchange', chg); document.addEventListener('webkitfullscreenchange', chg);
-  window.jpFullscreen = () => { sessionStorage.removeItem('jp_fs_off'); enter(); };
-})();
+/* ফুল স্ক্রিন বন্ধ করা হয়েছে — ফোনের ব্যাক/হোম বাটন সবসময় দেখা যাবে */
+window.jpFullscreen = () => {};
 
 /* ---------- অ্যাক্সেসিবিলিটি (TalkBack) ---------- */
 let A11Y = store.get('jp_a11y', false) === true;
@@ -3057,7 +3044,7 @@ async function viewReader(bookId, n) {
     '<button class="icon-btn" data-act="share-ch" aria-label="শেয়ার করুন" data-i="share"></button>' +
     '<button class="icon-btn" id="listenBtn" data-act="listen-quick" aria-label="শুনুন" data-i="headphone"></button><button class="icon-btn abtn" data-act="rs-open" aria-label="সেটিং">A</button></div>' +
     '</div>' +
-    '<article class="reader"><div class="rmark" id="rmark" aria-hidden="true"></div><h2>' + esc(c.title) + '</h2><div class="txt" id="rtxt" role="article" tabindex="0" aria-label="' + esc(c.title + '। ' + paras.join(' ')) + '">' + paras.map((p, i) => '<p data-p="' + i + '" aria-hidden="true">' + esc(p) + '</p>').join('') + '</div></article>' +
+    '<article class="reader"><div class="rmark" id="rmark" aria-hidden="true"></div><h2>' + esc(c.title) + '</h2><div class="txt" id="rtxt">' + paras.map((p, i) => '<p data-p="' + i + '">' + esc(p) + '</p>').join('') + '</div></article>' +
     '<section class="lplayer" id="lplayer"><div class="lcover">' + (rd.cover ? '<img src="' + esc(rd.cover) + '" alt="' + esc(c.bookTitle) + '">' : '') + '</div>' +
     '<h3 class="ltitle">' + esc(c.bookTitle) + '</h3><div class="lauthor">' + esc(rd.author) + '</div><div class="lchap">' + esc(c.title) + '</div>' +
     '<div class="lseek"><input type="range" id="lSeek" min="1" max="' + tot + '" value="' + (idx + 1) + '" aria-label="অধ্যায় বাছুন"><div class="lnums"><span>' + bn(1) + '</span><span id="lCur">' + bn(idx + 1) + '</span><span>' + bn(tot) + '</span></div></div>' +
@@ -3688,7 +3675,7 @@ async function remSchedule() {
     const r = getRem(); if (!r.on) return true;
     const pm = await LN.requestPermissions(); if (pm.display !== 'granted') return false;
     const p = String(r.t).split(':');
-    await LN.schedule({ notifications: [{ id: 7001, title: 'যাত্রাপথ', body: 'আজকের পড়া এখনো বাকি — একটু গল্পের পথে হাঁটবেন?', schedule: { on: { hour: +p[0], minute: +p[1] || 0 }, allowWhileIdle: true } }] });
+    await LN.schedule({ notifications: [{ id: 7001, title: 'যাত্রাপথ', body: 'আজকের পড়া এখনো বাকি — একটু গল্পের পথে হাঁটবেন?', schedule: { on: { hour: +p[0], minute: +p[1] || 0 } } }] });
     return true;
   } catch (e) { return false; }
 }
