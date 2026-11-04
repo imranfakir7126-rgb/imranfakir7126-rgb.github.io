@@ -253,7 +253,7 @@ html:not([data-theme=dark]) .freshb{color:var(--red2)}
 .rprog u{display:block;height:100%;width:100%;background:var(--red);text-decoration:none;transform-origin:0 50%;transform:scaleX(0);will-change:transform}
 .rpct{font-size:11.5px;text-align:center;margin:6px 0 4px;opacity:.85}
 .rbtns{display:flex;justify-content:space-between}
-.rbtns button{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:13px;font-weight:600;padding:2px 0}
+.rbtns button[disabled]{opacity:.35}.rbtns button{min-height:52px;font-size:15px;justify-content:center;flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:13px;font-weight:600;padding:2px 0}
 .rbtns svg{width:22px;height:22px}
 .spk-bar{position:fixed;left:12px;right:12px;bottom:calc(104px + env(safe-area-inset-bottom));z-index:26;max-width:736px;margin:0 auto;background:var(--red);color:#fff;border-radius:16px;box-shadow:0 4px 16px rgba(0,0,0,.4);display:flex;align-items:center;gap:4px;padding:6px 8px}
 .spk-bar[hidden]{display:none}
@@ -465,8 +465,8 @@ html:not([data-theme=dark]) .toast{background:#2b2118;color:#fff}
 .rmark{display:inline-block;margin:0 0 6px;padding:3px 12px;border-radius:14px;background:var(--red);color:#fff;font-size:13px;font-weight:600}
 .rmark.fin{background:#2e7d32}
 .reader{text-align:left}.reader .rmark{display:block;width:max-content;margin:0 auto 6px}
-body.chrome-off .rchrome{transform:translateY(-110%);opacity:0;pointer-events:none}
-body.chrome-off .rfoot,body.chrome-off .spk-bar{transform:translateY(130%);opacity:0;pointer-events:none}
+body.chrome-off .rchrome{transform:translateY(-110%);opacity:0;pointer-events:none;visibility:hidden;transition:transform .28s,opacity .28s,visibility 0s .28s}
+body.chrome-off .rfoot,body.chrome-off .spk-bar{transform:translateY(130%);opacity:0;pointer-events:none;visibility:hidden;transition:transform .28s,opacity .28s,visibility 0s .28s}
 .rfoot,.spk-bar{transition:transform .28s,opacity .28s}
 .rbtns button.on{color:var(--red)}
 .rpct{font-size:12.5px;text-align:center;margin:5px 0 4px;opacity:.85}
@@ -560,48 +560,43 @@ html:not([data-theme=dark]) .skb,html:not([data-theme=dark]) .skrow i,html:not([
 /* অডিও/শুনুন মোডে প্লেয়ার স্থির — সোয়াইপে উপরে উঠবে না */
 body.lmode{overflow:hidden;position:fixed;left:0;right:0;width:100%;height:100%;overscroll-behavior:none}
 
-/* ===== শুনুন প্লেয়ার — টিল নিউমরফিক ===== */
+/* আগের/পরের অধ্যায় বাটন — দুই থিমেই স্পষ্ট */
+.rbtns{gap:12px;padding:4px 0}
+.rbtns button{flex-direction:row;border-radius:14px;background:var(--red);color:#fff;font-size:15px;font-weight:700;min-height:48px}
+.rbtns button[disabled]{background:rgba(128,128,128,.22);color:var(--rtext);opacity:.45}
+.rbtns button:not([disabled]):active{filter:brightness(1.12)}
+
+/* ===== শুনুন প্লেয়ার — গাঢ় ===== */
 .rtop .abtn .tg{display:none}.rtop .abtn .tg svg{width:22px;height:22px}
 body.lmode .rtop .abtn .ta{display:none}body.lmode .rtop .abtn .tg{display:grid}
 body.lmode .rtop [data-act=bm-r],body.lmode .rtop [data-act=share-ch]{display:none}
-body.lmode .rchrome{background:transparent;--rtext:#0b1f24;color:#0b1f24}
-body.lmode .rtop .icon-btn{background:linear-gradient(145deg,#d6f3f7,#bfe3e8);color:#0b1f24;border-radius:13px;width:42px!important;height:42px!important;box-shadow:0 6px 12px -4px rgba(52,98,108,.55),inset 0 2px 3px rgba(255,255,255,.8)}
-body.lmode .rtop .mid{flex:1;align-items:center;text-align:center;background:linear-gradient(145deg,#d6f3f7,#bfe3e8);border-radius:26px;padding:9px 16px;margin:0 8px;box-shadow:0 6px 12px -4px rgba(52,98,108,.55),inset 0 2px 3px rgba(255,255,255,.8)}
-body.lmode .rtop .mid small{display:none}body.lmode .rtop .mid b{font-size:15px;color:#0b1f24;white-space:nowrap}
-body.lmode .rtabs{background:rgba(255,255,255,.38)}
-body.lmode .rtabs button{color:#0b1f24}
-body.lmode .rtabs button.on{background:linear-gradient(145deg,#d6f3f7,#bfe3e8);color:#0b1f24;box-shadow:0 4px 10px -4px rgba(52,98,108,.6),inset 0 2px 3px rgba(255,255,255,.8)}
-body.lmode{overflow:hidden;position:fixed;left:0;right:0;width:100%;height:100%;overscroll-behavior:none;background:#bfe0e5}
-body.lmode .lplayer{position:fixed;inset:0;overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;justify-content:flex-start;padding:142px 26px calc(22px + env(safe-area-inset-bottom));color:#0b1f24;background:radial-gradient(60% 38% at 16% 24%,rgba(255,255,255,.6),transparent 70%),radial-gradient(55% 34% at 88% 58%,rgba(255,255,255,.42),transparent 70%),radial-gradient(70% 40% at 28% 92%,rgba(110,170,182,.5),transparent 70%),linear-gradient(180deg,#cfe9ed,#a9d2d8)}
+body.lmode .rchrome{background:transparent;--rtext:#fff;color:#fff}
+body.lmode .rtop .icon-btn{color:#fff}
+body.lmode .rtop .mid{align-items:center;text-align:center;flex:1}
+body.lmode{overflow:hidden;position:fixed;left:0;right:0;width:100%;height:100%;overscroll-behavior:none;background:#0b0908}
+body.lmode .lplayer{position:fixed;inset:0;overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;justify-content:flex-start;padding:142px 26px calc(22px + env(safe-area-inset-bottom));color:#fff;background:linear-gradient(180deg,#6e5a4a 0%,#2a211b 38%,#0d0a09 70%,#0b0908 100%)}
 body.lmode .lplayer input[type=range]{touch-action:pan-x}
-.lstage{position:relative;width:100%;display:flex;justify-content:center}
-.lstage::before,.lstage::after{content:'';position:absolute;top:10%;bottom:10%;width:64px;border-radius:34px;background:linear-gradient(145deg,#d3f2f6,#bde1e6);box-shadow:0 10px 18px -8px rgba(40,90,100,.5),inset 0 2px 3px rgba(255,255,255,.7)}
-.lstage::before{left:-62px}.lstage::after{right:-62px}
-.lframe{position:relative;padding:9px;border-radius:28px;background:linear-gradient(145deg,#d6f3f7,#bfe3e8);box-shadow:5px 6px 0 -1px rgba(111,156,164,.75),0 18px 28px -12px rgba(30,80,90,.55),inset 0 2px 3px rgba(255,255,255,.85)}
-.lcover{width:max(118px,min(50vw,230px,calc((100vh - 560px) * .667)));aspect-ratio:2/3;border-radius:18px;overflow:hidden;background:#9cc4cb}
+.lstage,.lframe{display:flex;justify-content:center;width:auto}
+.lcover{width:max(130px,min(56vw,260px,calc((100vh - 540px) * .667)));aspect-ratio:2/3;border-radius:22px;overflow:hidden;background:#333;box-shadow:0 14px 34px rgba(0,0,0,.6)}
 .lcover img{width:100%;height:100%;object-fit:cover;display:block}
-.ltitle{font-size:24px;font-weight:700;margin:18px 0 4px;color:#000;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.lmeta{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;margin-top:6px}
-.lwho{flex:1;min-width:0}.lauthor{font-size:17px;font-weight:700}
-.lchap{margin-top:2px;font-size:12.5px;opacity:.7;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.lcirc,.lb,.lpill{background:linear-gradient(145deg,#d6f3f7,#bfe3e8);color:#0b1f24;border:0;box-shadow:0 7px 14px -5px rgba(52,98,108,.6),inset 0 2px 3px rgba(255,255,255,.85),inset 0 -2px 3px rgba(120,170,178,.35)}
-.lcirc{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;flex:0 0 auto}.lcirc svg{width:22px;height:22px}
-.lheart.on{color:#d93c56}.lheart.on svg{fill:currentColor}
-.lseek{width:100%;margin-top:14px}
-.lseek input{-webkit-appearance:none;appearance:none;width:100%;height:28px;background:transparent;margin:0}
-.lseek input::-webkit-slider-runnable-track{height:3px;background:#0b1f24;border-radius:3px}
-.lseek input::-webkit-slider-thumb{-webkit-appearance:none;width:15px;height:15px;border-radius:50%;background:#0b1f24;margin-top:-6px}
-.lseek input::-moz-range-track{height:3px;background:#0b1f24;border-radius:3px}
-.lseek input::-moz-range-thumb{width:15px;height:15px;border:0;border-radius:50%;background:#0b1f24}
-.lnums{display:flex;justify-content:space-between;font-size:13px;font-weight:700}
-.lctl{display:flex;align-items:center;justify-content:space-between;width:100%;margin-top:12px}
-.lb{width:50px;height:50px;border-radius:50%;display:grid;place-items:center}.lb svg{width:26px;height:26px}
-.lb.big{width:76px;height:76px;box-shadow:0 10px 18px -6px rgba(52,98,108,.65),inset 0 2px 3px rgba(255,255,255,.85),0 0 0 1.5px rgba(70,95,102,.6)}.lb.big svg{width:34px;height:34px}
-.lb[disabled]{opacity:.4}.lb:active,.lcirc:active,.lpill:active{transform:scale(.94)}
-.lctl2{display:flex;justify-content:center;align-items:center;gap:16px;margin-top:16px;width:100%}
-.lpill{min-height:44px;padding:8px 20px;border-radius:24px;font-weight:700;font-size:15px}
-.lpill.on{background:#0b1f24;color:#d6f3f7}
-.lst{margin-top:10px;font-size:12.5px;opacity:.75;min-height:18px}
+.ltitle{font-size:24px;font-weight:600;margin:22px 0 4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.lmeta{width:100%;margin-top:2px}.lwho{text-align:center}
+.lauthor{font-size:17px;opacity:.9}.lchap{margin-top:4px;font-size:13px;opacity:.6}
+.lseek{width:100%;margin-top:20px}
+.lseek input{-webkit-appearance:none;appearance:none;width:100%;height:30px;background:transparent;margin:0}
+.lseek input::-webkit-slider-runnable-track{height:8px;background:rgba(255,255,255,.28);border-radius:8px}
+.lseek input::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:#fff;margin-top:-5px}
+.lseek input::-moz-range-track{height:8px;background:rgba(255,255,255,.28);border-radius:8px}
+.lseek input::-moz-range-thumb{width:18px;height:18px;border:0;border-radius:50%;background:#fff}
+.lnums{display:flex;justify-content:space-between;font-size:14px;opacity:.85}
+.lctl{display:flex;align-items:center;justify-content:space-between;width:100%;margin-top:16px}
+.lb{width:50px;height:50px;border-radius:50%;display:grid;place-items:center;color:#fff;background:none;border:0}.lb svg{width:28px;height:28px}
+.lb.big{width:76px;height:76px;background:#fff;color:#1a1411}.lb.big svg{width:36px;height:36px}
+.lb[disabled]{opacity:.35}.lb:active,.lpill:active{transform:scale(.94)}
+.lctl2{display:flex;justify-content:center;align-items:center;gap:14px;margin-top:18px;width:100%}
+.lpill{min-height:44px;padding:8px 20px;border-radius:24px;font-weight:600;font-size:15px;color:#fff;background:rgba(255,255,255,.14);border:0}
+.lpill.on{background:#fff;color:#1a1411}
+.lst{margin-top:12px;font-size:13px;opacity:.7;min-height:18px}
 
 /* ===== স্ক্রিনশটের মতো পোর্ট্রেট বইয়ের কার্ড ===== */
 .rail .bkc{flex:0 0 27%;max-width:140px;min-width:100px;scroll-snap-align:start}
@@ -839,7 +834,7 @@ html[data-theme=dark]{--wa:#d3a8ff;--wa-on:#26103d;--wa-soft:rgba(211,168,255,.1
 .acirc .sav.big{width:64px;height:64px;font-size:24px}
 .acirc .nm{font-size:12.5px;line-height:1.25;max-width:76px;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
 .asoon{display:flex;flex-direction:column;align-items:center;text-align:center;padding:48px 18px}.aring{width:120px;height:120px;border-radius:50%;background:rgba(196,38,44,.14);display:grid;place-items:center;margin-bottom:22px}.adot{width:78px;height:78px;border-radius:50%;background:#b8284a;display:grid;place-items:center;color:#fff}.adot svg{width:34px;height:34px}.asoon h2{margin:0 0 8px;font-size:22px}.asoon p{margin:0 0 22px;opacity:.75;line-height:1.7;max-width:300px}.acd{display:flex;gap:12px}.acd div{width:76px;padding:12px 0;border-radius:14px;background:rgba(127,127,127,.12)}.acd b{display:block;font-size:22px}.acd span{font-size:12px;opacity:.7}.aopen{margin-top:18px;font-size:13px;opacity:.75}
-.rtabs{display:none!important}
+
 
 /* ===== কমিউনিটি (cx) ===== */
 .cxw{padding-bottom:96px}
@@ -2721,7 +2716,7 @@ async function viewHome() {
   let h = headerTab() + '<main class="page home">' + offBanner();
   if (data.sections.every((s) => !s.books.length)) return h + '<div class="empty" style="margin-top:16px">এখনো কোনো বই যোগ করা হয়নি।</div></main>';
   let allB = []; try { allB = await api('/books'); } catch (e) { /* ignore */ }
-  h += await contCard(allB);
+  /* উপরের "পড়া চালিয়ে যান" কার্ড সরানো — নিচের বটম প্লেয়ারই থাকবে */
   const feat = data.sections.find((x) => x.key === 'featured');
   if (feat) h += feat.books.length ? '<div class="rail feat" id="featuredRail">' + feat.books.map((b, i) => featCard(b, i)).join('') + '</div>' : '<div class="empty">নির্বাচিত উপন্যাস এখনো ঠিক করা হয়নি।</div>';
   const rec = data.sections.find((x) => x.key === 'recent');
@@ -3000,15 +2995,15 @@ async function viewBook(id) {
   b.chapters.forEach((c) => {
     const p = cpOf(b.id, c.n); const fin = isDone(b.id, c.n); const tm = ctOf(b.id, c.n); const cur = last === c.n; const done = !!dl[c.n];
     let mark = '', sl = '';
-    if (cur) { mark = `<span class="chs play" aria-hidden="true">${IC.play}</span>`; sl = 'পড়ছেন'; }
+    if (cur) { mark = `<span class="chs play" aria-hidden="true">${IC.play}</span>`; sl = 'পড়ছেন, ' + bn(p) + '% পড়া হয়েছে'; }
     else if (fin) { mark = `<span class="chs ok" aria-hidden="true">${IC.check}</span>`; sl = 'পড়া শেষ'; }
-    else if (p || tm) { mark = '<span class="chs rdl" aria-hidden="true">পড়া হয়েছে</span>'; sl = 'পড়া হয়েছে'; }
+    else if (p || tm) { mark = '<span class="chs rdl" aria-hidden="true">' + bn(p) + '%</span>'; sl = bn(p) + '% পড়া হয়েছে'; }
     h += `<div class="ch${cur ? ' rd' : ''}${fin ? ' fin' : ''}" role="listitem"><button class="chm" data-act="read" data-id="${esc(b.id)}" data-n="${c.n}" aria-label="অধ্যায় ${bn(c.n)}: ${esc(c.title)}${sl ? ', ' + sl : ''}"><span class="chn" aria-hidden="true">${bn(c.n)}</span><span class="cht"><b>${esc(c.title)}</b></span>${mark}</button>` +
       `<button class="chdl${done ? ' done' : ''}"${done ? ' disabled' : ''} data-act="dl-ch" data-id="${esc(b.id)}" data-n="${c.n}" aria-label="${esc(c.title)} ${done ? 'ডাউনলোড করা আছে' : 'ডাউনলোড করুন'}">${done ? IC.check : IC.download}</button></div>`;
   });
   cacheBook(b);
   const bar = startN != null ? `<button class="contbar" data-act="read" data-id="${esc(b.id)}" data-n="${startN}" aria-label="${contLbl}, বইয়ের ${bn(bpct)}% পড়া হয়েছে"><span class="cbp" aria-hidden="true">${bn(bpct)}%</span><span class="cbl" aria-hidden="true">${contLbl} ${IC.play}</span></button>` : '';
-  return h + `</div></div></main>` + bar;
+  return h + `</div></div></main>`;
 }
 function cacheBook(b) {
   const c = getCache();
@@ -3061,29 +3056,26 @@ async function viewReader(bookId, n) {
   const pct = cpOf(bookId, n); const idx = Math.max(0, chn.indexOf(n)); const tot = Math.max(chn.length, 1);
   return '<div class="rchrome" id="rchrome"><div class="rtop"><button class="icon-btn" data-act="to-book" data-id="' + esc(bookId) + '" aria-label="বইয়ের পেজ" data-i="back"></button>' +
     '<div class="mid"><small>' + esc(rd.author) + '</small><b>' + esc(c.bookTitle) + '</b></div>' +
-    '<button class="icon-btn' + (getSaved().indexOf(bookId) >= 0 ? ' on' : '') + '" data-act="bm-r" aria-label="পছন্দের তালিকা" data-i="save"></button>' +
-    '<button class="icon-btn" data-act="share-ch" aria-label="শেয়ার করুন" data-i="share"></button>' +
+    '<button class="icon-btn" data-act="drawer-open" aria-label="অধ্যায়সমূহ" data-i="grid"></button>' +
     '<button class="icon-btn abtn" data-act="rs-open" aria-label="সেটিং"><span class="ta">A</span><span class="tg">' + IC.gear + '</span></button></div>' +
     '<div class="rtabs" role="tablist"><button id="tabRead" role="tab" aria-selected="true" class="on" data-act="rmode" data-v="read">' + IC.read + 'পড়ুন</button><button id="tabListen" role="tab" aria-selected="false" data-act="rmode" data-v="listen">' + IC.headphone + 'শুনুন</button></div>' +
     '</div>' +
     '<article class="reader"><div class="rmark" id="rmark" aria-hidden="true"></div><h2>' + esc(c.title) + '</h2><div class="txt" id="rtxt">' + paras.map((p, i) => '<p data-p="' + i + '">' + esc(p) + '</p>').join('') + '</div></article>' +
     '<section class="lplayer" id="lplayer"><div class="lstage"><div class="lframe"><div class="lcover">' + (rd.cover ? '<img src="' + esc(rd.cover) + '" alt="' + esc(c.bookTitle) + '">' : '') + '</div></div></div>' +
     '<h3 class="ltitle">' + esc(c.bookTitle) + '</h3>' +
-    '<div class="lmeta"><button class="lcirc lheart' + (getSaved().indexOf(bookId) >= 0 ? ' on' : '') + '" data-act="bm-r" aria-label="পছন্দের তালিকা">' + IC.heart + '</button><div class="lwho"><div class="lauthor">' + esc(rd.author) + '</div><div class="lchap">' + esc(c.title) + ' • অধ্যায় ' + bn(idx + 1) + '/' + bn(tot) + '</div></div><button class="lcirc" data-act="drawer-open" aria-label="অধ্যায়ের তালিকা">' + IC.dots + '</button></div>' +
+    '<div class="lmeta"><div class="lwho"><div class="lauthor">' + esc(rd.author) + '</div><div class="lchap">' + esc(c.title) + ' • অধ্যায় ' + bn(idx + 1) + '/' + bn(tot) + '</div></div></div>' +
     '<div class="lseek"><input type="range" id="lSeek" min="0" max="1000" value="0" aria-label="শোনার অগ্রগতি"><div class="lnums"><span id="lCur">' + bn('0:00') + '</span><span id="lTot">' + bn('0:00') + '</span></div></div>' +
     '<div class="lctl"><button class="lb" data-act="lp-back" aria-label="১০ সেকেন্ড পিছনে">' + IC.b10 + '</button><button class="lb" data-act="lp-prev" aria-label="আগের অধ্যায়"' + (c.prev ? '' : ' disabled') + '>' + IC.prev + '</button><button class="lb big" id="lPlay" data-act="lp-play" aria-label="চালান বা থামান">' + IC.play + '</button><button class="lb" data-act="lp-next" aria-label="পরের অধ্যায়"' + (c.next ? '' : ' disabled') + '>' + IC.next + '</button><button class="lb" data-act="lp-fwd" aria-label="১০ সেকেন্ড সামনে">' + IC.f10 + '</button></div>' +
     '<div class="lctl2"><button class="lpill" id="lSpd" data-act="lp-speed" aria-label="গতি">' + spdTxt() + '</button><button class="lpill" id="lTmr" data-act="lp-timer" aria-label="ঘুমানোর টাইমার">☾ টাইমার</button></div><div class="lst" id="lSt" aria-live="off"></div></section>' +
-    '<div class="rnav"><button class="btn ghost" ' + (c.prev ? 'data-act="read" data-id="' + esc(bookId) + '" data-n="' + c.prev + '"' : 'disabled') + '>‹ আগের অধ্যায়</button>' +
-    '<button class="btn" ' + (c.next ? 'data-act="read" data-id="' + esc(bookId) + '" data-n="' + c.next + '"' : 'disabled') + '>পরের অধ্যায় ›</button></div>' +
-    '<div class="spk-bar" id="spkBar" hidden><button data-act="spk-prev" aria-label="আগের অনুচ্ছেদ">' + IC.prev + '</button><button id="spkPlay" data-act="spk-pp" aria-label="বিরতি">' + IC.pause + '</button><button data-act="spk-next" aria-label="পরের অনুচ্ছেদ">' + IC.next + '</button><div class="st" id="spkSt"></div><button data-act="spk-stop" aria-label="বন্ধ">' + IC.close + '</button></div>' +
+        '<div class="spk-bar" id="spkBar" hidden><button data-act="spk-prev" aria-label="আগের অনুচ্ছেদ">' + IC.prev + '</button><button id="spkPlay" data-act="spk-pp" aria-label="বিরতি">' + IC.pause + '</button><button data-act="spk-next" aria-label="পরের অনুচ্ছেদ">' + IC.next + '</button><div class="st" id="spkSt"></div><button data-act="spk-stop" aria-label="বন্ধ">' + IC.close + '</button></div>' +
     '<div class="rfoot"><div class="rprog"><u id="rprogU" style="transform:scaleX(' + (pct / 100) + ')"></u></div><div class="rpct" id="rpct" aria-hidden="true"></div>' +
-    '<div class="rbtns"><button data-act="drawer-open"><span data-i="grid"></span>অধ্যায়</button><button id="autoBtn" data-act="r-auto" class="' + (getRS().auto ? 'on' : '') + '"><span data-i="play"></span>অটো</button><button data-act="rs-open"><span data-i="gear"></span>সেটিং</button></div></div>';
+    '<div class="rbtns"><button ' + (c.prev ? 'data-act="read" data-id="' + esc(bookId) + '" data-n="' + c.prev + '"' : 'disabled') + ' aria-label="আগের অধ্যায়">‹ আগের অধ্যায়</button><button ' + (c.next ? 'data-act="read" data-id="' + esc(bookId) + '" data-n="' + c.next + '"' : 'disabled') + ' aria-label="পরের অধ্যায়">পরের অধ্যায় ›</button></div></div>';
 }
 /* রিডারের কন্ট্রোল: ঢোকার ২ সেকেন্ড পর লুকায়, লেখায় ট্যাপ করলে আবার আসে */
 let chromeT = null;
 const inRead = () => document.body.classList.contains('reading') && !document.body.classList.contains('lmode');
-function chromeShow(ms) { document.body.classList.remove('chrome-off'); clearTimeout(chromeT); if (ms > 0 && !A11Y) chromeT = setTimeout(() => { if (inRead()) chromeHide(); }, ms); }
-function chromeHide() { if (A11Y || !inRead() || sheetOpen() || drawerOpen()) return; document.body.classList.add('chrome-off'); }
+function chromeShow(ms) { document.body.classList.remove('chrome-off'); clearTimeout(chromeT); if (ms > 0) chromeT = setTimeout(() => { if (inRead()) chromeHide(); }, ms); }
+function chromeHide() { if (!inRead() || sheetOpen() || drawerOpen()) return; document.body.classList.add('chrome-off'); }
 function rptxt() { return bn(rd ? cpOf(rd.id, rd.n) : 0) + '% পড়া • সময়: ' + fmtTime(rd ? ctOf(rd.id, rd.n) : 0); }
 function refreshRT() {
   if (!rd) return; const fin = isDone(rd.id, rd.n);
@@ -3107,7 +3099,7 @@ function afterReader(listen) {
   if (rd) { const pct = cpOf(rd.id, rd.n); if (pct > 0 && pct < 98) setTimeout(() => { const max = document.documentElement.scrollHeight - window.innerHeight; if (max > 0 && window.scrollY < 5) window.scrollTo(0, max * pct / 100); }, 60); }
   refreshRT();
   setTimeout(() => { if (!rd || !document.body.classList.contains('reading')) return; if (document.documentElement.scrollHeight - window.innerHeight <= 2) { const pr = getCP(); (pr[rd.id] = pr[rd.id] || {})[rd.n] = 100; store.set('jp_cprog', pr); markDone(rd.id, rd.n); refreshRT(); } }, 400);
-  if (r.auto) startAutoRead();
+  if (r.auto) setRS('auto', false);
   if (r.wake) wakeOn();
   if (listen) { setMode('listen'); setTimeout(() => speakStart(), 350); } else chromeShow(2000);
 }
@@ -3723,7 +3715,7 @@ function renderMini(page) {
   if (!last || page === 'read' || store.get('jp_minion', true) === false) { off(); return; }
   const key = last.id + ':' + last.n; const b = getCache()[last.id];
   if (!b || store.get('jp_minihide', '') === key) { off(); return; }
-  const pct = (prog[last.id] && prog[last.id].n === last.n) ? prog[last.id].pct : 0;
+  const pct = cpOf(last.id, last.n) || 0;
   el.innerHTML = '<div class="mini-bar" style="width:' + pct + '%"></div><div class="mini-cover" data-act="book" data-id="' + esc(b.id) + '"><img src="' + esc(b.cover) + '" alt=""></div>' +
     '<div class="mini-txt" data-act="read" data-id="' + esc(b.id) + '" data-n="' + last.n + '"><div class="mt">' + esc(b.title) + ' পর্ব ' + bn(last.n) + '</div><div class="ms">' + esc(b.cat || b.author) + '</div></div><span class="mini-pct">' + bn(pct) + '%</span>' +
     '<button class="mini-x" data-act="mini-close" data-key="' + esc(key) + '" aria-label="বন্ধ করুন">' + IC.close + '</button>';
@@ -4017,10 +4009,10 @@ async function removeBookDownloads(id) {
 async function onClick(ev) {
   if (ev.detail === 0 && ev.isTrusted !== false && !A11Y) { A11Y = true; store.set('jp_a11y', true); chromeShow(0); }
   if (document.body.classList.contains('reading') && !document.body.classList.contains('lmode') && !ev.target.closest('[data-act],button,a,input,#sheetWrap,#drawerWrap')) {
-    if (ev.target.closest('.reader') && Date.now() - hlAt > 700 && !(($('#hlMenu') || {}).hidden === false)) { if (document.body.classList.contains('chrome-off')) chromeShow(4000); else chromeHide(); }
+    if (ev.target.closest('.reader') && Date.now() - hlAt > 700 && !(($('#hlMenu') || {}).hidden === false)) { if (document.body.classList.contains('chrome-off')) chromeShow(2000); else chromeHide(); }
   }
-  const el = ev.target.closest('[data-act]'); if (!el) { if (ev.target.closest('.rchrome,.rfoot')) chromeShow(4000); return; }
-  if (el.closest('.rchrome,.rfoot') && el.dataset.act !== 'r-auto') chromeShow(4000);
+  const el = ev.target.closest('[data-act]'); if (!el) { if (ev.target.closest('.rchrome,.rfoot')) chromeShow(2000); return; }
+  if (el.closest('.rchrome,.rfoot') && el.dataset.act !== 'r-auto') chromeShow(2000);
   const act = el.dataset.act; const d = el.dataset;
   try {
     switch (act) {
