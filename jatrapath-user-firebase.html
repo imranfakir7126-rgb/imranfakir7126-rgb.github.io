@@ -1145,6 +1145,13 @@ i.wbdg.on{display:block}.icon-btn.wbell{position:relative}
 .cxbar{display:flex;gap:8px;align-items:flex-end;margin-top:8px}.cxbar textarea{flex:1;min-height:44px;max-height:100px;resize:none;border:1px solid var(--line);background:var(--card2);color:var(--text);border-radius:22px;padding:11px 16px;outline:0}
 .cxsend{width:44px;height:44px;border-radius:50%;background:var(--pur);color:var(--bubfg,#fff);display:grid;place-items:center;flex:0 0 auto}
 .nav .ico{position:relative}
+.wcmp2{display:flex;align-items:flex-end;gap:8px}.wcmp2 textarea{flex:1;max-height:110px;resize:none;border:1px solid var(--line);background:var(--card2);color:var(--text);border-radius:22px;padding:10px 14px;outline:0}
+.wcmp2 button{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;flex:0 0 auto}.wcmp2 button svg{width:24px;height:24px}.wcmp2 .sd{background:var(--pur);color:var(--bubfg,#fff)}
+.wrpb{display:flex;justify-content:space-between;align-items:center;gap:8px;background:var(--card2);border-left:3px solid var(--pur);border-radius:10px;padding:6px 10px;margin-bottom:8px;font-size:13px;text-align:left}.wrpb[hidden]{display:none}.wrpb span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.wq{background:rgba(0,0,0,.18);border-left:3px solid currentColor;border-radius:8px;padding:4px 8px;margin-bottom:5px;font-size:13px;opacity:.9}.wq b{display:block;font-size:12px}
+.wres{display:flex;gap:4px;margin-top:3px}.wre{background:rgba(0,0,0,.25);border-radius:10px;padding:1px 7px;font-size:13px}.wre.me{outline:1px solid var(--pur-soft)}
+.wb{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+.wemo{display:flex;justify-content:space-around;padding-bottom:8px;border-bottom:1px solid var(--line)}.wmenu .wemo button{display:inline-block;width:auto;border:0;padding:6px;font-size:28px}
 </style>
 <script>try{var __t=JSON.parse(localStorage.getItem('jp_theme'));document.documentElement.setAttribute('data-theme',__t==='light'?'light':'dark');if(__t==='grey')document.documentElement.setAttribute('data-skin','grey');var __m=document.querySelector('meta[name=theme-color]');if(__m)__m.setAttribute('content',__t==='light'?'#f5f2ec':__t==='grey'?'#3a4651':'#121212')}catch(e){}</script>
 <div id="splash" class="splash">
@@ -2011,17 +2018,46 @@ async function viewMsgTab() {
   setTimeout(wRefreshBadges, 300);
   return hd('<button class="icon-btn wbell" data-act="go" data-href="/w/notif" aria-label="নোটিফিকেশন">' + WI.bell + '<i class="wbdg" data-k="req"></i></button>') + '<main class="page">' + await wInboxBody() + '</main>';
 }
+
+let wReply = null, wLP = null, wLPd = 0; const wMsgs = {};
+function wChHead(p, right) { return '<header class="hdr"><div class="hdr-row"><button class="icon-btn" data-act="back" aria-label="পেছনে" data-i="back"></button><div class="hdr-title" style="display:flex;align-items:center;gap:10px;min-width:0">' + wAv(p).replace('class="wav2"', 'class="wav2" style="width:38px;height:38px;font-size:16px"') + '<span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + esc(p.name || 'লেখক') + '</span></div>' + (right || '') + '</div></header>'; }
+function wRenderMsgs(s, me) {
+  const box = document.getElementById('wChBox'), on = box.dataset.n || 'লেখক';
+  box.innerHTML = s.docs.map((d) => {
+    const m = d.data(); wMsgs[d.id] = m; const re = m.re || {}, cnt = {}; Object.keys(re).forEach((u) => { cnt[re[u]] = (cnt[re[u]] || 0) + 1; });
+    const rr = Object.keys(cnt).map((e) => '<span class="wre' + (re[me] === e ? ' me' : '') + '">' + esc(e) + (cnt[e] > 1 ? ' ' + bn(cnt[e]) : '') + '</span>').join('');
+    return '<div class="wb ' + (m.from === me ? 'me' : 'th') + '" data-mid="' + d.id + '">' + (m.rp ? '<div class="wq"><b>' + (m.rp.f === me ? 'আপনি' : esc(on)) + '</b>' + esc(m.rp.t) + '</div>' : '') + (m.text ? esc(m.text) : '') + '<small>' + wTm(m.at) + '</small>' + (rr ? '<div class="wres">' + rr + '</div>' : '') + '</div>';
+  }).join('') || '<div class="wempty">এখনো কোনো মেসেজ নেই। প্রথম মেসেজটি পাঠান 👋</div>';
+}
+function wRpShow() { const b = document.getElementById('wRpBar'); if (!b) return; if (!wReply) { b.hidden = true; b.innerHTML = ''; return; } const bx = document.getElementById('wChBox'); b.hidden = false; b.innerHTML = '<span>↩ <b>' + (wReply.f === wMe() ? 'আপনি' : esc((bx && bx.dataset.n) || 'লেখক')) + '</b>: ' + esc(wReply.t) + '</span><button data-wm="rpx" aria-label="বাতিল">✕</button>'; }
+function wCopy(t) { try { if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(t).then(() => toast('কপি হয়েছে'), () => wCopy2(t)); return; } } catch (e) { /* ignore */ } wCopy2(t); }
+function wCopy2(t) { const a = document.createElement('textarea'); a.value = t; a.style.cssText = 'position:fixed;opacity:0'; document.body.append(a); a.select(); try { document.execCommand('copy'); toast('কপি হয়েছে'); } catch (e) { toast('কপি করা যায়নি'); } a.remove(); }
+function wMsgMenu(mid) {
+  const m = wMsgs[mid]; if (!m) return;
+  wModal('<div class="wmenu"><div class="wemo">' + ['❤️', '😂', '😮', '😢', '👍', '🙏'].map((e) => '<button data-wm="react" data-m="' + mid + '" data-e="' + e + '">' + e + '</button>').join('') + '</div>' + (m.text ? '<button data-wm="copy" data-m="' + mid + '">📋 কপি</button>' : '') + '<button data-wm="reply" data-m="' + mid + '">↩ রিপ্লাই</button><button data-wm="close">বাতিল</button></div>');
+}
+const wLpStart = (e) => { const b = e.target.closest && e.target.closest('.wb[data-mid]'); if (!b) return; clearTimeout(wLP); wLP = setTimeout(() => { wLPd = Date.now(); wMsgMenu(b.dataset.mid); }, 450); };
+['touchstart', 'mousedown'].forEach((t) => document.addEventListener(t, wLpStart, { passive: true }));
+['touchend', 'touchmove', 'touchcancel', 'mouseup', 'scroll'].forEach((t) => document.addEventListener(t, () => clearTimeout(wLP), { passive: true }));
+async function viewBlocked() {
+  const hp = headerPage('ব্লক করা লেখক', true);
+  try { await withWTimeout(wInit(), 12000); } catch (e) { return hp + '<main class="page"><div class="empty">' + esc(wErr(e)) + '</div></main>'; }
+  if (!WR.user) return hp + '<main class="page"><div class="empty">ব্লক তালিকা দেখতে লেখক প্যানেলে লগইন করুন।<br><br><button class="btn pur" data-act="go" data-href="/w">লগইন করুন</button></div></main>';
+  const q = await WR.fs.collection('blocks').where('by', '==', wMe()).get(); let h = '';
+  for (const d of q.docs.sort((a, b) => (b.data().at || 0) - (a.data().at || 0))) { const u = d.data().target, p = await wProf(u); h += '<div class="wrow" style="cursor:default">' + wAv(p) + '<div class="in"><b>' + esc(p.name || 'লেখক') + '</b><small>ব্লক করা আছে</small></div><div class="wrb" style="margin:0"><button class="pr" data-wm="unblock" data-u="' + esc(u) + '">আনব্লক</button></div></div>'; }
+  return hp + '<main class="page">' + (h || '<div class="empty">কোনো লেখককে ব্লক করা নেই।</div>') + '</main>';
+}
 /* ---- চ্যাট ---- */
 let wUn = null;
 async function wChat(uid) {
   const me = wMe(); if (!uid || uid === me) return wPage('মেসেজ', '<div class="wgate"><p>পেজ পাওয়া যায়নি</p></div>', 'msg');
   const [p, r] = await Promise.all([wProf(uid), wRel(uid)]), cid = wCid(me, uid), ok = r.friends && !r.iBlock && !r.heBlock;
   if (ok) { const ref = WR.fs.doc('chats/' + cid); if (!(await ref.get()).exists) await ref.set({ users: [me, uid].sort(), last: '', lastAt: Date.now(), lastFrom: '', unread: {} }); }
-  const head = headerPage(p.name || 'লেখক', true, '<button class="icon-btn" data-wm="more" data-u="' + esc(uid) + '" data-b="' + (r.iBlock ? 1 : 0) + '" aria-label="আরও">' + WI.more + '</button>');
-  const foot = ok ? '<div class="wcmp"><textarea id="wChT" rows="1" maxlength="1000" placeholder="মেসেজ লিখুন"></textarea><button class="sd" data-wm="send" aria-label="পাঠান">' + WI.send + '</button></div>'
+  const head = wChHead(p, '<button class="icon-btn" data-wm="more" data-u="' + esc(uid) + '" data-b="' + (r.iBlock ? 1 : 0) + '" aria-label="আরও">' + WI.more + '</button>');
+  const foot = ok ? '<div class="wlock2"><div class="wrpb" id="wRpBar" hidden></div><div class="wcmp2"><textarea id="wChT" rows="1" maxlength="1000" placeholder="মেসেজ লিখুন"></textarea><button class="sd" data-wm="send" aria-label="পাঠান">' + WI.send + '</button></div></div>'
     : '<div class="wlock2">' + (r.iBlock ? 'আপনি এই লেখককে ব্লক করেছেন<button data-wm="unblock" data-u="' + esc(uid) + '">আনব্লক</button>' : r.heBlock ? 'এই লেখক আপনাকে মেসেজ পাঠানোর অনুমতি দেননি' : 'মেসেজ পাঠাতে উভয়কে একে অপরকে ফলো করতে হবে') + '</div>';
   if (ok) wChatBind(cid, uid);
-  return head + '<main class="page"><div class="wchl" id="wChBox" data-c="' + cid + '" data-u="' + esc(uid) + '"></div></main>' + foot;
+  return head + '<main class="page"><div class="wchl" id="wChBox" data-c="' + cid + '" data-n="' + esc(p.name || 'লেখক') + '" data-u="' + esc(uid) + '"></div></main>' + foot;
 }
 function wChatBind(cid) {
   let n = 0; (function t() {
@@ -2030,7 +2066,7 @@ function wChatBind(cid) {
     const me = wMe();
     wUn = WR.fs.collection('chats/' + cid + '/msgs').orderBy('at').limitToLast(150).onSnapshot((s) => {
       const b = document.getElementById('wChBox'); if (!b) { if (wUn) wUn(); wUn = null; return; }
-      b.innerHTML = s.docs.map((d) => { const m = d.data(); return '<div class="wb ' + (m.from === me ? 'me' : 'th') + '">' + (m.img ? '<img src="' + esc(m.img) + '" alt="ছবি">' : '') + (m.text ? esc(m.text) : '') + '<small>' + wTm(m.at) + '</small></div>'; }).join('') || '<div class="wempty">এখনো কোনো মেসেজ নেই। প্রথম মেসেজটি পাঠান 👋</div>';
+      wRenderMsgs(s, me);
       window.scrollTo(0, document.body.scrollHeight);
       if (s.docs.length && s.docs[s.docs.length - 1].data().from !== me) WR.fs.doc('chats/' + cid).update({ ['unread.' + me]: 0 }).catch(() => {});
     }, (e) => { const b = document.getElementById('wChBox'); if (b) b.innerHTML = '<div class="wempty">' + esc(wErr(e)) + '</div>'; });
@@ -2039,10 +2075,10 @@ function wChatBind(cid) {
 async function wSend(img) {
   const box = document.getElementById('wChBox'), t = document.getElementById('wChT'); if (!box) return;
   const me = wMe(), uid = box.dataset.u, cid = box.dataset.c, text = img ? '' : ((t && t.value) || '').trim(); if (!text && !img) return;
-  const sd = document.querySelector('.wcmp .sd'); if (sd) sd.disabled = true;
+  const sd = document.querySelector('.wcmp2 .sd'); if (sd) sd.disabled = true;
   try {
     await WR.fs.doc('chats/' + cid).set({ users: [me, uid].sort(), last: img ? '📷 ছবি' : text.slice(0, 80), lastAt: Date.now(), lastFrom: me, unread: { [uid]: firebase.firestore.FieldValue.increment(1) } }, { merge: true });
-    await WR.fs.collection('chats/' + cid + '/msgs').add({ from: me, text, img: img || '', at: Date.now() });
+    await WR.fs.collection('chats/' + cid + '/msgs').add(Object.assign({ from: me, text, img: img || '', at: Date.now() }, wReply ? { rp: { t: wReply.t, f: wReply.f } } : {})); wReply = null; wRpShow();
     if (t) { t.value = ''; t.style.height = ''; }
   } catch (e) { toast(e && e.code === 'permission-denied' ? 'মেসেজ পাঠানো যায়নি — ব্লক বা ফলো ব্যাক নেই' : wErr(e)); }
   if (sd) sd.disabled = false;
@@ -2054,11 +2090,16 @@ document.addEventListener('change', async (e) => {
   t.value = '';
 });
 document.addEventListener('click', async (ev) => {
+  if (Date.now() - wLPd < 500) return;
   const el = ev.target.closest('[data-wm]'); if (!el) { if (ev.target.id === 'wMod') wModalX(); return; }
   const a = el.dataset.wm, u = el.dataset.u, me = wMe();
   try {
     switch (a) {
       case 'close': wModalX(); break;
+      case 'react': { const bx = document.getElementById('wChBox'), m = wMsgs[el.dataset.m] || {}, e = el.dataset.e; wModalX(); await WR.fs.doc('chats/' + bx.dataset.c + '/msgs/' + el.dataset.m).update({ ['re.' + me]: (m.re || {})[me] === e ? firebase.firestore.FieldValue.delete() : e }); break; }
+      case 'copy': { const m = wMsgs[el.dataset.m]; wModalX(); if (m) wCopy(m.text || ''); break; }
+      case 'reply': { const m = wMsgs[el.dataset.m]; wModalX(); if (m) { wReply = { t: (m.text || '').slice(0, 100), f: m.from }; wRpShow(); const t = document.getElementById('wChT'); if (t) t.focus(); } break; }
+      case 'rpx': wReply = null; wRpShow(); break;
       case 'prof': wModalX(); if (el.dataset.k) nav('/author/' + enc(el.dataset.k)); break;
       case 'open': await wMsgOpen(u, el.dataset.n, el.dataset.k); break;
       case 'chat': nav('/w/chat/' + u); break;
@@ -2068,10 +2109,9 @@ document.addEventListener('click', async (ev) => {
       case 'send': await wSend(); break;
       case 'img': { const f = document.getElementById('wChImg'); if (f) f.click(); break; }
       case 'more': wModal('<div class="wmenu">' + (el.dataset.b === '1' ? '<button data-wm="unblock" data-u="' + esc(u) + '">🔓 আনব্লক করুন</button>' : '<button data-wm="block-ask" data-u="' + esc(u) + '">🚫 ব্লক করুন</button>') + '<button data-wm="close">বাতিল</button></div>'); break;
-      case 'block-ask': wModal('<div class="wlk"><h3>ব্লক করবেন?</h3><p>ব্লক করলে এই লেখক আর কখনো আপনাকে মেসেজ পাঠাতে পারবেন না এবং আপনাদের বন্ধুত্ব বাতিল হবে।</p><div class="lkb"><button data-wm="close">বাতিল</button><button class="pr" data-wm="block-do" data-u="' + esc(u) + '">ব্লক করুন</button></div></div>'); break;
+      case 'block-ask': wModal('<div class="wlk"><h3>ব্লক করবেন?</h3><p>ব্লক করলে এই লেখক আর আপনাকে মেসেজ পাঠাতে পারবেন না। সেটিংসের "ব্লক করা লেখক" থেকে আনব্লক করলে আবার মেসেজ করা যাবে।</p><div class="lkb"><button data-wm="close">বাতিল</button><button class="pr" data-wm="block-do" data-u="' + esc(u) + '">ব্লক করুন</button></div></div>'); break;
       case 'block-do': {
         await WR.fs.doc('blocks/' + me + '_' + u).set({ by: me, target: u, at: Date.now() });
-        for (const id of [me + '_' + u, u + '_' + me]) { try { const d = await WR.fs.doc('follows/' + id).get(); if (d.exists) await d.ref.delete(); } catch (x) { /* ignore */ } }
         wModalX(); toast('ব্লক করা হয়েছে'); route(); break;
       }
       case 'unblock': await WR.fs.doc('blocks/' + me + '_' + u).delete(); wModalX(); toast('আনব্লক করা হয়েছে'); route(); break;
@@ -2761,6 +2801,7 @@ async function route() {
     if (page === 'home') { loadingView(); html = await viewHome(); }
     else if (page === 'community') { loadingView(); html = await viewCommunity(); }
     else if (page === 'msg') { loadingView(); html = await viewMsgTab(); }
+    else if (page === 'blocked') { loadingView(); html = await viewBlocked(); }
     else if (page === 'myposts') { html = viewMyPosts(); }
     else if (page === 'mycomments') { html = viewMyComments(); }
     else if (page === 'favcat') { loadingView(); html = await viewFavCat(); }
@@ -4068,7 +4109,7 @@ function viewProfile() {
     '<div class="pcard"><div class="tmrow"><div><small>আজকের পড়ার সময়</small><div class="tm" id="todayTime">' + fmtTime(secs) + '</div></div><button class="tmr wk7" data-act="go" data-href="/goals" aria-label="গত ৭ দিনের পড়া ও লক্ষ্য"><small>গত ৭ দিনে</small><b>' + fmtTime(weekTotal) + '</b><i class="wk7c">›</i></button></div>' +
     '<div class="wk7h">রিডিং স্ট্রিক, লক্ষ্য ও গ্রাফ দেখতে “গত ৭ দিনে” চাপুন</div></div>' +
     '<div class="grp">লেখক ও কমিউনিটি</div><div class="pcard" style="padding:4px 12px"><div class="sublbl">লেখক প্যানেল</div>' +
-    mrow('pen', 'রাইটার প্যানেল', 'নিজের গল্প লিখুন ও প্রকাশের জন্য পাঠান', '', 'data-act="go" data-href="/w"') + mrow('user', 'ফলো করা লেখক', bn(Object.keys(getFollow()).length) + ' জন', '', 'data-act="go" data-href="/following"') +
+    mrow('pen', 'রাইটার প্যানেল', 'নিজের গল্প লিখুন ও প্রকাশের জন্য পাঠান', '', 'data-act="go" data-href="/w"') + mrow('user', 'ফলো করা লেখক', bn(Object.keys(getFollow()).length) + ' জন', '', 'data-act="go" data-href="/following"') + mrow('user', 'ব্লক করা লেখক', 'আনব্লক করে আবার মেসেজ পাঠান', '', 'data-act="go" data-href="/blocked"') +
     '<div class="sublbl">পোস্ট</div>' + mrow('chat', 'আমার পোস্টসমূহ', 'এডিট, ডিলিট ও মন্তব্যের উত্তর', '', 'data-act="go" data-href="/myposts"') + mrow('chat', 'আমার মন্তব্যসমূহ', 'নিজের মন্তব্য দেখুন ও মুছুন', '', 'data-act="go" data-href="/mycomments"') + '</div>' +
     '<div class="grp">পড়া ও খোঁজা</div><div class="pcard" style="padding:4px 12px">' +
     mrow('read', 'সব গল্পের তালিকা', '', '', 'data-act="go" data-href="/list/recent"') + mrow('grid', 'পছন্দের ক্যাটাগরি', getFC().length ? bn(getFC().length) + 'টি বাছাই করা' : '', '', 'data-act="go" data-href="/favcat"') + mrow('bell', 'নোটিশ', '', '', 'data-act="go" data-href="/notices"') + '</div>' +
