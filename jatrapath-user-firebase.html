@@ -267,6 +267,24 @@ html:not([data-theme=dark]) .freshb{color:var(--red2)}
 .sheet-dim,.drawer-dim{position:absolute;inset:0;background:rgba(0,0,0,.55)}
 .sheet{position:absolute;left:0;right:0;bottom:0;max-width:720px;margin:0 auto;background:#1c1c1e;color:#f2f2f2;border-radius:26px 26px 0 0;padding:10px 16px calc(18px + env(safe-area-inset-bottom));max-height:86vh;overflow-y:auto;animation:sh-up .22s ease-out}
 html:not([data-theme=dark]) .sheet{background:#fff;color:#1b1917}
+html .sheet:has(.cmsh){background:#1c1c1e;color:#f2f2f2;--text:#f2f2f2;--card:#2a2a2d;--card2:#2a2a2d;--line:#3a3a3e;--muted:#a6a6a6;display:flex;flex-direction:column;height:84vh;max-height:84vh;overflow:hidden;padding:8px 0 0}
+.cmsh{display:flex;flex-direction:column;flex:1;min-height:0;color:#f2f2f2}
+.cmh{display:flex;align-items:center;justify-content:center;position:relative;padding:4px 52px 10px}.cmh h3{margin:0;font-size:17px;text-align:center;border:0!important;padding:0!important}.cmh h3:before,.cmh h3:after{content:none!important;display:none!important}
+.cmh .cmx2{position:absolute;right:14px;top:-2px;width:38px;height:38px;border-radius:50%;background:#2e2e32;color:#f2f2f2;font-size:16px;display:grid;place-items:center}
+.cmw{display:flex;flex-direction:column;flex:1;min-height:0}
+.cml{flex:1;min-height:0;overflow-y:auto;padding:4px 16px 12px;-webkit-overflow-scrolling:touch}
+.cmi{display:flex;gap:12px;padding:10px 0}.cmi.rp{margin-left:46px}.cmi .sav{width:40px;height:40px;flex:0 0 auto;border-radius:50%;background:var(--pur);color:#fff;display:grid;place-items:center;font-weight:700;font-size:16px}.cmi.rp .sav{width:32px;height:32px;font-size:13px}
+.cmb{flex:1;min-width:0}.cmb>b{font-size:14.5px;color:#f2f2f2}.cmb .cxtag{margin-left:6px}.cmb p{margin:3px 0 0;line-height:1.55;white-space:pre-wrap;word-break:break-word;font-size:15.5px;color:#f2f2f2}.cmb .rnl{color:#a6a6a6;font-size:12.5px}
+.cmx{display:flex;gap:18px;align-items:center;margin-top:5px;color:#a6a6a6;font-size:13px}.cmx button{color:#a6a6a6;font-weight:700;font-size:13px}.cmx .dl{color:#ff6b6b}
+.cmc{border-top:1px solid #333;background:#1c1c1e;padding:8px 12px calc(10px + env(safe-area-inset-bottom))}
+.cmemo{display:none;gap:4px;justify-content:space-between;padding:2px 2px 8px;overflow-x:auto}.cmc:focus-within .cmemo{display:flex}.cmemo button{font-size:26px;padding:2px 6px}
+.cmrow{display:flex;align-items:flex-end;gap:10px}.cmrow .sav{width:38px;height:38px;border-radius:50%;background:var(--pur);color:#fff;display:grid;place-items:center;font-weight:700;flex:0 0 auto;margin-bottom:3px}
+.cmrow textarea{flex:1;min-height:44px;max-height:120px;resize:none;border:0;background:#2e2e32;color:#f2f2f2;border-radius:22px;padding:12px 16px;font:inherit;font-size:15.5px;outline:0;line-height:1.4}
+.cmrow textarea::placeholder{color:#9a9a9f}
+.cmsend{width:44px;height:44px;border-radius:50%;background:#7a1f33;color:#fff;display:grid;place-items:center;flex:0 0 auto;transition:.15s;opacity:.7}.cmsend.on,.cmc:focus-within .cmsend{background:#d1103a;opacity:1}.cmsend svg{width:22px;height:22px}
+.cmst{display:flex;gap:6px;justify-content:center;padding:0 0 8px}.cmst button{font-size:30px;color:#555;line-height:1;padding:0 3px}.cmst button.on{color:#f5b301}
+.cmdone{text-align:center;color:#2fd4a0;font-weight:700;padding:8px 16px 4px}.cmh3{margin:10px 0 6px;font-size:16px;display:flex;gap:10px;align-items:center}.cmh3 small{color:#f5b301;font-size:14px}
+.cmsh .rvi{background:transparent;border:0;border-bottom:1px solid #2e2e32;border-radius:0;padding:12px 0}
 @keyframes sh-up{from{transform:translateY(40px);opacity:.4}to{transform:none;opacity:1}}
 .sheet .grab{width:44px;height:4px;border-radius:2px;background:#888;margin:2px auto 14px}
 .sheet h3{margin:0 0 12px;font-size:21px;display:flex;align-items:center;gap:10px}
@@ -2777,7 +2795,9 @@ async function viewAuthor(key) {
   auKey = key; auTab = 'books'; auSt = 'সব';
   let list = []; try { list = await api('/books?author=' + enc(key)); } catch (e) { return headerPage('লেখক', true) + '<main class="page"><div class="errbox"><p>লেখকের তথ্য পাওয়া যায়নি।</p></div></main>'; }
   auBooks = list; const name = list[0] ? String(list[0].author).trim() : (getFollow()[key] || {}).n || 'লেখক';
-  const uid = (list.find((b) => b.authorId) || {}).authorId || ''; window.__auUid = uid; window.__auKey = key;
+  let uid = (list.find((b) => b.authorId) || {}).authorId || '';
+  if (!uid && SFB()) { try { const q = await SFB().collection('profiles').where('name', '==', name).limit(1).get(); if (!q.empty) uid = q.docs[0].id; } catch (e) { /* ignore */ } }
+  window.__auUid = uid; window.__auKey = key;
   const p = await getProfile(uid); window.__auP = p;
   const reads = list.reduce((a, b) => a + (b.reads || 0), 0), likes = list.reduce((a, b) => a + (b.likes || 0), 0);
   const fol = isFollow(key);
@@ -2893,13 +2913,13 @@ function rvItem(c) {
     '<p>' + esc(c.text) + '</p>' + (c.reply && c.reply.text ? '<div class="cmr"><span class="lk">লেখক</span><small>' + cmDate(c.reply.at) + '</small><p>' + esc(c.reply.text) + '</p></div>' : '') + '</div>';
 }
 function rvForm() {
-  if (rvOk) return '<div class="rvform done">✓ আপনার রিভিউ জমা হয়েছে। ধন্যবাদ!</div>';
-  return '<div class="rvform"><h3>আপনার মতামত দিন</h3><div class="rvst" role="radiogroup" aria-label="স্টার রেটিং">' + [1, 2, 3, 4, 5].map((i) => '<button type="button" role="radio" aria-checked="false" aria-label="' + bn(i) + ' স্টার" data-s="rv-star" data-v="' + i + '">★</button>').join('') + '</div>' +
-    '<textarea id="rvTxt" maxlength="200" rows="3" placeholder="বইটি সম্পর্কে কিছু লিখুন..." aria-label="আপনার মন্তব্য"></textarea><div class="rvcnt"><span>একবার রিভিউ দিলে আর বদলানো যাবে না</span><span id="rvN">০/২০০</span></div><p class="acerr" id="rvErr" role="alert"></p><button class="bigbtn" data-s="rv-send">রিভিউ সাবমিট করুন</button></div>';
+  if (rvOk) return '';
+  return '<div class="cmc"><div class="cmst" role="radiogroup" aria-label="স্টার রেটিং">' + [1, 2, 3, 4, 5].map((i) => '<button type="button" role="radio" aria-checked="false" aria-label="' + bn(i) + ' স্টার" data-s="rv-star" data-v="' + i + '">★</button>').join('') + '</div>' +
+    '<p class="acerr" id="rvErr" role="alert" style="margin:0 0 6px"></p><div class="cmrow"><span class="sav">আ</span><textarea id="rvTxt" maxlength="200" rows="1" placeholder="আপনার মতামত লিখুন..." aria-label="আপনার মন্তব্য"></textarea><button class="cmsend" data-s="rv-send" aria-label="পাঠান"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button></div><div class="rvcnt" style="color:#a6a6a6"><span>একবার রিভিউ দিলে আর বদলানো যাবে না</span><span id="rvN">০/২০০</span></div></div>';
 }
 function rvDraw() {
   const w = $('#tabRv'); if (!w) return; const avg = rvList.filter((x) => x.rate).length ? rvList.reduce((a, x) => a + (x.rate || 0), 0) / rvList.filter((x) => x.rate).length : 0;
-  w.innerHTML = rvForm() + '<h3 class="rvh3">সব রিভিউ' + (avg ? ' <small>★ ' + bn(avg.toFixed(1)) + '</small>' : '') + '</h3>' + (rvList.length ? rvList.map(rvItem).join('') : '<div class="empty">এখনো কোনো রিভিউ নেই। প্রথম রিভিউটি আপনি দিন।</div>');
+  w.innerHTML = '<div class="cml">' + (rvOk ? '<div class="cmdone">✓ আপনার রিভিউ জমা হয়েছে। ধন্যবাদ!</div>' : '') + '<h3 class="cmh3">সব রিভিউ' + (avg ? ' <small>★ ' + bn(avg.toFixed(1)) + '</small>' : '') + '</h3>' + (rvList.length ? rvList.map(rvItem).join('') : '<div class="empty">এখনো কোনো রিভিউ নেই। প্রথম রিভিউটি আপনি দিন।</div>') + '</div>' + rvForm();
   const c = $('#rvCnt'); if (c) c.textContent = bn(rvList.length);
 }
 async function rvLoad(id) {
@@ -2928,7 +2948,7 @@ document.addEventListener('click', (ev) => {
     const rv = el.dataset.v === 'rv'; $$('.btabs button').forEach((x) => { x.classList.toggle('on', x === el); x.setAttribute('aria-selected', x === el); });
     const c1 = $('#tabCh'), c2 = $('#tabRv'); if (c1) c1.hidden = rv; if (c2) c2.hidden = !rv; if (rv && rvBook !== el.dataset.id || (rv && !c2.innerHTML)) rvLoad(el.dataset.id); return;
   }
-  if (a === 'rv-star') { rvRate = +el.dataset.v; $$('.rvst button').forEach((x, i) => { x.classList.toggle('on', i < rvRate); x.setAttribute('aria-checked', i + 1 === rvRate); }); return; }
+  if (a === 'rv-star') { rvRate = +el.dataset.v; $$('.rvst button, .cmst button').forEach((x, i) => { x.classList.toggle('on', i < rvRate); x.setAttribute('aria-checked', i + 1 === rvRate); }); return; }
   if (a === 'rv-send') { rvSend(); return; }
   if (a === 'author') { closeSheet(); nav('/author/' + enc(el.dataset.k)); }
   else if (a === 'follow') doFollow(el.dataset.k, el.dataset.n);
@@ -3169,7 +3189,7 @@ function forYou(all) {
   const fav = getFC(); const hist = store.get('jp_hist', []).map((x) => x.id); let cats = fav.slice();
   if (!cats.length) { const cnt = {}; hist.forEach((id) => { const b = all.find((k) => k.id === id); if (b && b.cat) cnt[b.cat] = (cnt[b.cat] || 0) + 1; }); cats = Object.keys(cnt).sort((a, b) => cnt[b] - cnt[a]).slice(0, 2); }
   let l = cats.length ? all.filter((b) => cats.indexOf(b.cat) >= 0 && hist.indexOf(b.id) < 0).slice(0, 12) : [];
-  if (l.length < 2) l = all.filter((b) => hist.indexOf(b.id) < 0 && isText(b)).sort((x, y) => (y.reads || 0) - (x.reads || 0)).slice(0, 12); /* পছন্দ/ইতিহাস না থাকলে জনপ্রিয় বই */
+  if (l.length < 2) l = all.filter((b) => hist.indexOf(b.id) < 0 && (b.type || 'text') !== 'audio').sort((x, y) => (y.reads || 0) - (x.reads || 0)).slice(0, 12); /* পছন্দ/ইতিহাস না থাকলে জনপ্রিয় বই */
   if (l.length < 2) return '';
   return secTitle('আপনার জন্য', '/favcat') + shelfOpen() + l.map((b) => CARD(b)).join('') + '</div>';
 }
@@ -3416,7 +3436,7 @@ function cpOf(id, n) { return ((getCP()[id] || {})[n]) || 0; }
 const fmtV = (n) => (n >= 100000 ? bn((n / 100000).toFixed(1).replace(/\.0$/, '')) + ' লাখ+' : fmtN(n));
 /* বইয়ের পেজ — সহজ ব্যবহার ও অ্যাক্সেসিবিলিটি */
 function openRv(id, n) {
-  openSheet('<div class="rvsheet"><div class="grab"></div><h3>রিভিউ ও রেটিং (<span id="rvCnt">' + bn(n || 0) + '</span>)</h3><div id="tabRv"></div></div>');
+  openSheet('<div class="rvsheet cmsh"><div class="grab"></div><div class="cmh"><h3>রিভিউ ও রেটিং · <span id="rvCnt">' + bn(n || 0) + '</span></h3><button class="cmx2" data-act="sheet-close" aria-label="বন্ধ করুন">✕</button></div><div id="tabRv" class="cmw"></div></div>');
   rvLoad(id);
 }
 function syncRx() { $$('.rxrow .rx[aria-pressed]').forEach((b) => b.setAttribute('aria-pressed', b.classList.contains('on'))); }
@@ -3751,6 +3771,7 @@ setInterval(lpTick, 400);
 /* ---------- বটম শিট / ড্রয়ার ---------- */
 const sheetOpen = () => !$('#sheetWrap').hidden;
 const drawerOpen = () => !$('#drawerWrap').hidden;
+document.addEventListener('input', (e) => { const t = e.target; if (t && (t.id === 'cxCt' || t.id === 'rvTxt')) { t.style.height = 'auto'; t.style.height = Math.min(t.scrollHeight, 120) + 'px'; const b = t.closest('.cmrow') && t.closest('.cmrow').querySelector('.cmsend'); if (b) b.classList.toggle('on', !!t.value.trim()); } });
 function openSheet(html) { $('#sheet').innerHTML = html; fillIcons($('#sheet')); $('#sheetWrap').hidden = false; }
 function closeSheet() { const w = $('#sheetWrap'); if (w) w.hidden = true; if (rd && inRead()) chromeShow(2000); }
 function closeDrawer() { const w = $('#drawerWrap'); if (w) w.hidden = true; }
@@ -4021,8 +4042,8 @@ function cxDel(id) {
 }
 function cxSheetHtml() {
   const p = cxPosts.find((x) => x.id === cxCur) || {}; const me = cxMe;
-  const item = (c, rp) => '<div class="cxci' + (rp ? ' rp' : '') + '"><b>' + esc(c.name || 'অতিথি পাঠক') + '</b>' + (c.uid && c.uid === p.uid ? '<span class="cxtag">লেখক</span>' : '') + '<small>' + cmDate(c.at) + '</small>' + (c.rn ? '<div><small style="margin:0">↪ ' + esc(c.rn) + '-কে উত্তর</small></div>' : '') + '<p>' + esc(c.text) + '</p>' +
-    '<div class="cxcb"><button data-cx="reply" data-cid="' + esc(rp ? c.rp : c.id) + '" data-n="' + esc(c.name || 'অতিথি পাঠক') + '">উত্তর দিন</button>' + (c.uid === me ? '<button class="dl" data-cx="cdel" data-cid="' + esc(c.id) + '">মুছুন</button>' : '') + '</div></div>';
+  const item = (c, rp) => '<div class="cmi' + (rp ? ' rp' : '') + '"><span class="sav">' + avInit(c.name || 'অতিথি') + '</span><div class="cmb"><b>' + esc(c.name || 'অতিথি পাঠক') + '</b>' + (c.uid && c.uid === p.uid ? '<span class="cxtag">লেখক</span>' : '') + (c.rn ? '<div class="rnl">↪ ' + esc(c.rn) + '-কে উত্তর</div>' : '') + '<p>' + esc(c.text) + '</p>' +
+    '<div class="cmx"><span>' + cmDate(c.at) + '</span><button data-cx="reply" data-cid="' + esc(rp ? c.rp : c.id) + '" data-n="' + esc(c.name || 'অতিথি পাঠক') + '">উত্তর দিন</button>' + (c.uid === me ? '<button class="dl" data-cx="cdel" data-cid="' + esc(c.id) + '">মুছুন</button>' : '') + '</div></div></div>';
   let l;
   if (cxCms === null) l = '<div class="empty">লোড করা যায়নি।' + cxWhy(cxErr) + '</div>';
   else if (!cxCms.length) l = '<div class="empty">এখনো কোনো মন্তব্য নেই।</div>';
@@ -4030,9 +4051,9 @@ function cxSheetHtml() {
     const ids = {}; cxCms.forEach((c) => { ids[c.id] = 1; }); const tops = cxCms.filter((c) => !c.rp || !ids[c.rp]).sort((a, b) => (b.at || 0) - (a.at || 0));
     l = tops.map((c) => item(c, false) + cxCms.filter((x) => x.rp === c.id).sort((a, b) => (a.at || 0) - (b.at || 0)).map((x) => item(x, true)).join('')).join('');
   }
-  return '<div class="grab"></div><div class="cxsheet"><h3>মন্তব্য' + (cxCms ? ' (' + bn(cxCms.length) + ')' : '') + '</h3><div class="cxcl" id="cxCl">' + l + '</div>' +
-    (cxReply ? '<div class="cxrb"><span>↪ ' + esc(cxReply.n) + '-কে উত্তর</span><button data-cx="rcancel">✕</button></div>' : '') +
-    '<p class="acerr" id="cxCe" role="alert"></p><div class="cxbar"><textarea id="cxCt" maxlength="300" rows="1" placeholder="' + (cxReply ? 'আপনার উত্তর লিখুন...' : 'কমেন্ট লিখুন') + '" aria-label="কমেন্ট"></textarea><button class="cxsend" data-cx="cm-send" aria-label="পাঠান"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M2 21l21-9L2 3v7l15 2-15 2z"/></svg></button></div></div>';
+  return '<div class="cmsh cxsheet"><div class="grab"></div><div class="cmh"><h3>মন্তব্য' + (cxCms ? ' · ' + bn(cxCms.length) : '') + '</h3><button class="cmx2" data-act="sheet-close" aria-label="বন্ধ করুন">✕</button></div><div class="cmw"><div class="cml" id="cxCl">' + l + '</div>' +
+    '<div class="cmc">' + (cxReply ? '<div class="cxrb"><span>↪ ' + esc(cxReply.n) + '-কে উত্তর</span><button data-cx="rcancel">✕</button></div>' : '') + '<div class="cmemo">' + ['😂', '🥰', '😁', '😳', '😏', '😍', '👍', '❤️'].map((e) => '<button type="button" data-cx="emo" data-e="' + e + '">' + e + '</button>').join('') + '</div>' +
+    '<p class="acerr" id="cxCe" role="alert" style="margin:0 0 6px"></p><div class="cmrow"><span class="sav">আ</span><textarea id="cxCt" maxlength="300" rows="1" placeholder="' + (cxReply ? 'আপনার উত্তর লিখুন...' : 'কমেন্ট লিখুন...') + '" aria-label="কমেন্ট"></textarea><button class="cmsend" data-cx="cm-send" aria-label="পাঠান"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button></div></div></div></div>';
 }
 async function cxOpenCm(id) {
   cxCur = id; cxCms = []; cxReply = null; openSheet(cxSheetHtml()); const f = await cxFs();
@@ -4078,6 +4099,7 @@ document.addEventListener('click', (ev) => {
   else if (a === 'react') cxReact(el.dataset.id, el.dataset.r);
   else if (a === 'comments') cxOpenCm(el.dataset.id);
   else if (a === 'cm-send') cxCmSend();
+  else if (a === 'emo') { const t = $('#cxCt'); if (t) { t.value += el.dataset.e; t.dispatchEvent(new Event('input', { bubbles: true })); } }
   else if (a === 'share') cxShare(el.dataset.id);
   else if (a === 'menu') cxMenu(el.dataset.id);
   else if (a === 'edit') { closeSheet(); cxEdit = el.dataset.id; cxEditP = cxPosts.find((x) => x.id === cxEdit) || null; if (curPath === '/community') cxOpenCompose(); else nav('/community'); }
@@ -4368,7 +4390,7 @@ function viewProfile() {
     mrow('folder', 'ডাউনলোড স্টোরেজ', fmtSize(storageSize()) + ' ব্যবহৃত', '', 'data-act="noop"') +
     mrow('trash', 'সব ডাউনলোড মুছুন', 'ফাইল + ডাউনলোড তালিকা', '', 'data-act="clear-dl"') + '</div>' +
     '<div class="grp">অন্যান্য</div><div class="pcard" style="padding:4px 12px">' +
-    mrow('info', 'অ্যাপ সম্পর্কে', '', '', 'data-act="go" data-href="/about"') + mrow('chat', 'যোগাযোগ করুন', '', '', 'data-act="go" data-href="/contact"') + mrow('info', 'প্রাইভেসি পলিসি', '', '', 'data-act="go" data-href="/privacy"') + mrow('pen', 'লেখার নিয়মাবলি', '', '', 'data-act="go" data-href="/w/rules"') +
+    mrow('info', 'অ্যাপ সম্পর্কে', '', '', 'data-act="go" data-href="/about"') + mrow('chat', 'যোগাযোগ করুন', '', '', 'data-act="go" data-href="/contact"') + mrow('info', 'প্রাইভেসি পলিসি', '', '', 'data-act="go" data-href="/privacy"') + mrow('pen', 'লেখার নিয়মাবলি', '', '', 'data-act="go" data-href="/w/rules"') + mrow('pen', 'লেখার নিয়মাবলি', '', '', 'data-act="go" data-href="/w/rules"') +
     '<div class="ver"><span>ভার্সন</span><span>' + bn('1.0') + '</span></div></div>' +
     '<div class="center" style="margin-top:14px;font-weight:600">আমাদের সাথে যুক্ত থাকুন</div><div class="social"><button class="icon-btn" style="background:#1fa855;color:#fff;width:48px;height:48px" data-act="wa" aria-label="হোয়াটসঅ্যাপ">' + IC.wa + '</button></div></main>';
 }
