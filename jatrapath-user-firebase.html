@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#121212">
 <meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://www.gstatic.com" crossorigin><link rel="preconnect" href="https://firestore.googleapis.com"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Noto+Serif+Bengali:wght@400;700&family=Tiro+Bangla&display=swap">
 <title>যাত্রাপথ বাংলা উপন্যাস</title>
 <link rel="icon" type="image/png" href="icon-192.png"><link rel="apple-touch-icon" href="icon-192.png"><link rel="manifest" href="manifest.webmanifest">
@@ -1125,6 +1125,41 @@ i.wbdg.on{display:block}.icon-btn.wbell{position:relative}
 .wav2{width:46px;height:46px;border-radius:50%;background:var(--card2);display:inline-grid;place-items:center;font-weight:700;overflow:hidden;flex:0 0 auto}.wav2 img{width:100%;height:100%;object-fit:cover}
 .wrow{display:flex;gap:12px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px;margin-bottom:10px;cursor:pointer}
 .wrow .in{flex:1;min-width:0}.wrow .in b{display:block}.wrow small{display:block;color:var(--muted);font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wtg{appearance:none;-webkit-appearance:none;width:52px;height:30px;border-radius:999px;border:2px solid var(--text);background:transparent;position:relative;flex:0 0 auto;cursor:pointer;transition:.2s}
+.wtg:before{content:'';position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:var(--text);transition:.2s}
+.wtg:checked{background:var(--pur);border-color:var(--pur)}.wtg:checked:before{left:25px;background:var(--bubfg,#fff)}.wtg:disabled{opacity:.5}
+.wtgr{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:18px 0 0}.wtgr b{display:block;font-size:17px}.wtgr small{display:block;color:var(--muted);font-size:13.5px;line-height:1.5;margin-top:2px}
+.wcats{display:flex;flex-wrap:wrap;gap:10px;margin:6px 0 4px}.wcats button{border:1.5px solid var(--line);border-radius:999px;padding:10px 18px;font-size:15px;font-weight:600;background:transparent;color:var(--text)}.wcats button.on{background:var(--pur);color:var(--bubfg,#fff);border-color:transparent}
+.wdecl{display:flex;gap:14px;align-items:flex-start;margin:20px 0 6px;line-height:1.6;font-size:15.5px}.wdecl input{width:24px;height:24px;flex:0 0 auto;margin-top:2px;accent-color:var(--pur)}
+.wrules h3{font-size:20px;margin:22px 0 8px}.wrules ul{margin:0;padding-left:22px}.wrules li{margin:0 0 10px;line-height:1.75;font-size:16px}.wrules .mt{color:var(--muted);font-size:14px}
+.wtbar{display:flex;align-items:center;gap:10px;padding:8px 10px}.wtbar button{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;color:var(--pur-soft)}.wtbar button svg{width:24px;height:24px}
+.wemp{background:var(--card);border-top:1px solid var(--line);padding:6px 10px 12px;max-height:38vh;overflow:auto}.wemp .eh{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:14px;padding:6px 4px}
+.wemp .eg{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}.wemp .eg button{font-size:28px;padding:8px 0;border-radius:10px}
+.wsheet{display:flex;flex-direction:column}.wsheet button{display:flex;align-items:center;gap:14px;padding:16px 8px;font-weight:600;font-size:16px;text-align:left}.wsheet button svg{width:26px;height:26px;color:var(--pur-soft)}
+.wmenu button.rd{color:#ff5a5a}.wmenu button svg{width:20px;height:20px;vertical-align:-4px;margin-right:12px}
+.wb img.wim{display:block;max-width:230px;width:100%;border-radius:12px;margin:2px 0 4px}
+.wbp{display:flex;flex-direction:column;gap:6px;padding:10px 4px 12px;border:2px solid transparent;border-radius:14px;margin-bottom:8px;width:100%;text-align:left}.wbp.on{border-color:var(--pur)}
+.wbp .r{display:flex;flex-direction:column;gap:6px;pointer-events:none}.wbp .wb{max-width:80%;margin:0}.wbp>b{font-size:14px;color:var(--muted);margin:0 6px}
+.wchl[data-bub="1"] .wb.me,.wbp[data-bub="1"] .wb.me{background:linear-gradient(135deg,#0ea5e9,#2563eb);color:#fff;border-radius:20px 20px 4px 20px}
+.wchl[data-bub="1"] .wb.th,.wbp[data-bub="1"] .wb.th{border-radius:20px 20px 20px 4px}
+.wchl[data-bub="2"] .wb.me,.wbp[data-bub="2"] .wb.me{background:linear-gradient(135deg,#f97316,#ec4899);color:#fff;border-radius:26px}
+.wchl[data-bub="2"] .wb.th,.wbp[data-bub="2"] .wb.th{border-radius:26px}
+.wchl[data-bub="3"] .wb.me,.wbp[data-bub="3"] .wb.me{background:linear-gradient(135deg,#10b981,#047857);color:#fff;border-radius:8px 8px 2px 8px}
+.wchl[data-bub="3"] .wb.th,.wbp[data-bub="3"] .wb.th{border-radius:8px 8px 8px 2px;border-left:3px solid #10b981}
+.wchl[data-bub="4"] .wb.me,.wbp[data-bub="4"] .wb.me{background:linear-gradient(135deg,#8b5cf6,#6d28d9);color:#fff;border-radius:28px 28px 6px 28px;box-shadow:0 4px 14px rgba(109,40,217,.35)}
+.wchl[data-bub="4"] .wb.th,.wbp[data-bub="4"] .wb.th{border-radius:28px 28px 28px 6px}
+.wchl[data-bub="5"] .wb.me,.wbp[data-bub="5"] .wb.me{background:transparent;color:var(--text);border:2px solid #f43f5e;border-radius:18px 4px 18px 18px}
+.wchl[data-bub="5"] .wb.th,.wbp[data-bub="5"] .wb.th{background:transparent;border:2px solid var(--line);border-radius:4px 18px 18px 18px}
+.wchl[data-bub] .wb.me small{color:rgba(255,255,255,.8)}.wchl[data-bub="5"] .wb.me small,.wbp[data-bub="5"] .wb.me small{color:var(--muted)}
+.auth2 .bkn{background:#16a34a}.bkc .bka{position:absolute;top:10px;left:10px;z-index:2;background:#111;color:#fff;font-size:11px;font-weight:800;padding:2px 8px;border-radius:10px;border:1px solid #fff4}
+.auth2 .aprow2{position:relative;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:6px 2px 8px}
+.apst2{display:flex;align-items:center;margin:4px 0 10px}.apst2 span{flex:1;display:flex;flex-direction:column;align-items:center;font-size:12.5px;color:var(--muted);padding:2px 6px;border-right:1px solid var(--line)}.apst2 span:last-child{border-right:0}.apst2 svg{width:22px;height:22px;color:var(--red);margin-bottom:2px}.apst2 b{font-size:19px;color:var(--text);line-height:1.3}
+.apbk{display:flex;align-items:center;justify-content:center;gap:8px;color:var(--muted);font-size:15px;margin:2px 0 12px}.apbk svg{width:22px;height:22px}.apbk b{color:var(--text)}
+.folbtn svg{width:20px;height:20px;flex:0 0 auto}.apbtns.one{grid-template-columns:1fr}.apbtns{display:grid;grid-template-columns:1.25fr 1fr;gap:10px;margin:0 0 14px}.apbtns .folbtn.wide{margin:0;display:flex;align-items:center;justify-content:center;gap:8px;padding:13px 8px;font-weight:700;border-radius:14px}
+.apabout{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px;margin:0 0 16px;border-left:4px solid var(--red)}.apabout h4{margin:0 0 8px;font-size:17px;display:flex;align-items:center;gap:8px}.apabout h4 svg{width:20px;height:20px}
+.apabout p{margin:0;color:var(--muted);line-height:1.75;white-space:pre-wrap;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}.apabout.open p{-webkit-line-clamp:unset;display:block}.apabout button{display:block;margin:8px 0 0 auto;color:var(--red);font-weight:700;font-size:14.5px}
+.aufl2{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:4px 0 12px}.aufl2 h3{margin:0;font-size:20px;display:flex;align-items:center;gap:8px}.aufl2 h3 svg{width:24px;height:24px;color:var(--red)}.aufl2 .cn{border:1px solid var(--line);border-radius:999px;padding:7px 14px;font-weight:600;font-size:14px}
+.fchips .chip svg{width:16px;height:16px;vertical-align:-3px;margin-right:6px}
 .wrow .tm{font-size:11px;color:var(--muted);text-align:right}.wrow .un{display:inline-block;min-width:20px;padding:0 6px;border-radius:10px;background:var(--pur);color:var(--bubfg,#fff);font-size:11px;text-align:center;margin-top:4px}
 .wrow .wrb{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}.wrb button,.wlk .lkb button{border:1px solid var(--line);border-radius:999px;padding:8px 16px;font-weight:600;font-size:14px}
 .wrb button.pr,.wlk .lkb button.pr{background:var(--pur);color:var(--bubfg,#fff);border-color:transparent}.wrb button.dg{color:#ff6b6b}
@@ -1399,7 +1434,7 @@ function coverUri(b) {
   return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
 }
 function pub(b, full) {
-  const o = { id: b.id, title: b.title, author: b.author, authorId: b.authorId || '', authorPhoto: b.authorPhoto || '', cat: b.cat, status: b.status, desc: b.desc, cover: coverUri(b), featured: b.featured, demo: !!b.demo, publishedAt: b.publishedAt, reads: b.reads, likes: b.likes, dislikes: b.dislikes, favs: b.favs || 0, cmts: b.cmts || 0, thanks: b.thanks || 0, chapterCount: b.chapters.length, audioCount: b.audio.length, type: b.type || 'text' };
+  const o = { id: b.id, title: b.title, author: b.author, authorId: b.authorId || '', authorPhoto: b.authorPhoto || '', cat: b.cat, status: b.status, desc: b.desc, cover: coverUri(b), featured: b.featured, demo: !!b.demo, publishedAt: b.publishedAt, reads: b.reads, likes: b.likes, dislikes: b.dislikes, favs: b.favs || 0, cmts: b.cmts || 0, thanks: b.thanks || 0, adult: !!b.adult, chapterCount: b.chapters.length, audioCount: b.audio.length, type: b.type || 'text' };
   if (full) {
     o.chapters = b.chapters.map((c) => ({ n: c.n, title: c.title, at: c.d ? new Date(c.d).toISOString() : b.publishedAt }));
     o.audio = b.audio.map((a) => ({ n: a.n, title: a.title, demo: !!a.demo, url: a.src || toneUrl(a.notes) }));
@@ -1539,7 +1574,7 @@ async function loadDb() {
   const cfg = {}; cf.forEach((d) => { cfg[d.id] = d.data(); }); const stats = {}; ss.forEach((d) => { stats[d.id] = d.data().days || {}; });
   const books = bs.docs.filter((d) => d.data().type !== 'voice').map((d) => { const x = d.data(); const voice = false;
     return { id: d.id, title: x.title || '', author: x.author || '', authorId: x.ownerUid || '', authorPhoto: x.authorPhoto || '', cat: canonCat(x.cat || ''), status: x.status || 'চলমান', desc: x.desc || '', cover: x.cover || null, featured: !!x.featured,
-      publishedAt: x.publishedAt || new Date().toISOString(), reads: x.reads || 0, likes: x.likes || 0, dislikes: x.dislikes || 0, favs: x.favs || 0, cmts: x.cmts || 0, thanks: x.thanks || 0, type: voice ? 'audio' : 'text',
+      publishedAt: x.publishedAt || new Date().toISOString(), reads: x.reads || 0, likes: x.likes || 0, dislikes: x.dislikes || 0, favs: x.favs || 0, cmts: x.cmts || 0, thanks: x.thanks || 0, adult: x.adult === true, type: voice ? 'audio' : 'text',
       chapters: voice ? [] : (x.chs || []).filter((c) => c.p && (!c.sc || c.sc <= Date.now())).sort((a, b) => a.n - b.n).map((c) => ({ n: c.n, cid: c.id, title: c.t, d: c.d || 0 })),
       audio: (x.audio || []).filter((a) => a.p).sort((a, b) => a.n - b.n).map((a) => ({ n: a.n, title: a.title, src: a.url })) }; });
   const home = [];
@@ -1863,12 +1898,14 @@ function wLoadScript(urls) {
   return new Promise((ok, no) => { let i = 0; (function go() { const s = document.createElement('script'); s.src = urls[i]; s.onload = ok; s.onerror = () => { s.remove(); if (++i < urls.length) go(); else no(new Error('load')); }; document.head.append(s); })(); });
 }
 const wCdn = (n) => ['https://www.gstatic.com/firebasejs/10.12.2/firebase-' + n + '-compat.js', 'https://cdn.jsdelivr.net/npm/firebase@10.12.2/firebase-' + n + '-compat.js'];
+let wAuthP = null;
+/* রাইটার প্যানেল দ্রুত খুলতে: অ্যাপ চালুর কিছু পরে অবসরে Auth স্ক্রিপ্ট আগেই নামিয়ে রাখা */
+setTimeout(() => { try { if (window.firebase && firebase.initializeApp && !firebase.auth && !wAuthP) { wAuthP = wLoadScript(wCdn('auth')); wAuthP.catch(() => { wAuthP = null; }); } } catch (e) { /* ignore */ } }, 4000);
 async function wInit() {
   if (WR.ready) return WR.ready;
   WR.ready = (async () => {
     if (!(window.firebase && firebase.initializeApp)) await wLoadScript(wCdn('app'));
-    if (!firebase.firestore) await wLoadScript(wCdn('firestore'));
-    if (!firebase.auth) await wLoadScript(wCdn('auth'));
+    await Promise.all([firebase.firestore ? 0 : wLoadScript(wCdn('firestore')), firebase.auth ? 0 : (wAuthP || (wAuthP = wLoadScript(wCdn('auth'))))]);
     WR.app = (firebase.apps || []).find((a) => a.name === 'writer') || firebase.initializeApp(WCFG, 'writer');
     WR.auth = WR.app.auth();
     try { await WR.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL); } catch (e) { try { await WR.auth.setPersistence(firebase.auth.Auth.Persistence.SESSION); } catch (x) { /* ignore */ } }
@@ -1997,11 +2034,23 @@ async function wNotif() {
   return wPage('নোটিফিকেশন', h || '<div class="wgate"><div class="big">🔔</div><p>এখনো কোনো নোটিফিকেশন নেই</p></div>', null, true);
 }
 /* ---- ইনবক্স ---- */
+const wPins = () => store.get('jp_wpin_' + (wMe() || ''), []);
+function wTogglePin(u, stay) { const k = 'jp_wpin_' + (wMe() || ''), l = store.get(k, []), i = l.indexOf(u); if (i >= 0) l.splice(i, 1); else l.unshift(u); store.set(k, l); toast(i >= 0 ? 'পিন সরানো হয়েছে' : 'চ্যাট পিন হয়েছে'); if (!stay) { try { route(); } catch (e) { /* ignore */ } } }
+(function () {
+  let t = null, fired = false;
+  const row = (e) => e.target && e.target.closest && e.target.closest('.wrow[data-wm="chat"]');
+  const clr = () => { if (t) { clearTimeout(t); t = null; } };
+  document.addEventListener('touchstart', (e) => { const r = row(e); if (!r || !r.querySelector('small') || !r.querySelector('.tm')) return; fired = false; clr(); t = setTimeout(() => { fired = true; wTogglePin(r.dataset.u); }, 550); }, { passive: true });
+  ['touchend', 'touchmove', 'touchcancel'].forEach((n) => document.addEventListener(n, clr, { passive: true }));
+  document.addEventListener('contextmenu', (e) => { const r = row(e); if (r && r.querySelector('.tm')) { e.preventDefault(); if (!fired) wTogglePin(r.dataset.u); fired = false; } });
+  document.addEventListener('click', (e) => { if (fired && row(e)) { e.stopPropagation(); e.preventDefault(); fired = false; } }, true);
+})();
 async function wInboxBody() {
   const me = wMe(), [c, a, b] = await Promise.all([WR.fs.collection('chats').where('users', 'array-contains', me).get(), WR.fs.collection('follows').where('to', '==', me).get(), WR.fs.collection('follows').where('from', '==', me).get()]);
   const iS = new Set(a.docs.map((d) => d.data().from)), fr = b.docs.map((d) => d.data().to).filter((u) => iS.has(u));
-  const chats = c.docs.map((d) => d.data()).filter((x) => x.last).sort((p, q) => (q.lastAt || 0) - (p.lastAt || 0)), has = new Set(); let h = '';
-  for (const x of chats) { const u = x.users.find((y) => y !== me); has.add(u); const p = await wProf(u), n = (x.unread || {})[me] || 0; h += '<div class="wrow" data-wm="chat" data-u="' + esc(u) + '">' + wAv(p) + '<div class="in"><b>' + esc(p.name || 'লেখক') + '</b><small>' + (x.lastFrom === me ? 'আপনি: ' : '') + esc(x.last) + '</small></div><div class="tm">' + wTm(x.lastAt) + (n ? '<br><span class="un">' + bn(n) + '</span>' : '') + '</div></div>'; }
+  const pins = wPins(), pk = (x) => pins.indexOf(x.users.find((y) => y !== me)) >= 0 ? 1 : 0;
+  const chats = c.docs.map((d) => d.data()).filter((x) => x.last && (x.lastAt || 0) > wClrGet(wCid(me, x.users.find((y) => y !== me)))).sort((p, q) => (pk(q) - pk(p)) || ((q.lastAt || 0) - (p.lastAt || 0))), has = new Set(); let h = '';
+  for (const x of chats) { const u = x.users.find((y) => y !== me); has.add(u); const p = await wProf(u), n = (x.unread || {})[me] || 0; h += '<div class="wrow" data-wm="chat" data-u="' + esc(u) + '">' + wAv(p) + '<div class="in"><b>' + (pins.indexOf(u) >= 0 ? '📌 ' : '') + esc(p.name || 'লেখক') + '</b><small>' + (x.lastFrom === me ? 'আপনি: ' : '') + esc(x.last) + '</small></div><div class="tm">' + wTm(x.lastAt) + (n ? '<br><span class="un">' + bn(n) + '</span>' : '') + '</div></div>'; }
   let f = ''; for (const u of fr.filter((u) => !has.has(u))) { const p = await wProf(u); f += '<div class="wrow" data-wm="chat" data-u="' + esc(u) + '">' + wAv(p) + '<div class="in"><b>' + esc(p.name || 'লেখক') + '</b><small>মেসেজ শুরু করুন</small></div></div>'; }
   return (h || '') + (f ? '<h2 class="wh2">বন্ধু</h2>' + f : '') + (h || f ? '' : '<div class="wgate"><div class="big">💬</div><p>এখনো কোনো বন্ধু নেই। কোনো লেখককে ফলো করুন — তিনি ফলো ব্যাক করলে এখানে মেসেজ করতে পারবেন।</p></div>');
 }
@@ -2019,14 +2068,29 @@ async function viewMsgTab() {
   return hd('<button class="icon-btn wbell" data-act="go" data-href="/w/notif" aria-label="নোটিফিকেশন">' + WI.bell + '<i class="wbdg" data-k="req"></i></button>') + '<main class="page">' + await wInboxBody() + '</main>';
 }
 
+const XI = {
+  pin: P('<path d="M9 3h6l-1 6 3 3v2H7v-2l3-3z"/><path d="M12 14v7"/>'), user: P('<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>'), trash: P('<path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/>'),
+  block: P('<circle cx="12" cy="12" r="9"/><path d="M5.6 5.6l12.8 12.8"/>'), pal: P('<path d="M12 3a9 9 0 100 18c1.2 0 2-.8 2-1.8 0-.5-.2-.9-.5-1.2-.3-.3-.5-.7-.5-1.2 0-1 .8-1.8 1.8-1.8H17a4 4 0 004-4c0-4.4-4-8-9-8z"/><circle cx="7.5" cy="11" r="1"/><circle cx="10.5" cy="7" r="1"/><circle cx="15" cy="7.5" r="1"/>'),
+  img: P('<rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="M21 16l-5-5-8 9"/>'), smile: P('<circle cx="12" cy="12" r="9"/><path d="M8 14s1.5 2.5 4 2.5S16 14 16 14M9 9.5h.01M15 9.5h.01"/>'),
+  kb: P('<rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M7 14h10"/>'), mail: P('<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>'),
+  uplus: P('<circle cx="9" cy="8" r="4"/><path d="M2 21c0-4 3-6 7-6s7 2 7 6M19 8v6M16 11h6"/>'), info: P('<circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5h.01"/>'), heart: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-8-5.2-8-11a4.5 4.5 0 018-2.8A4.5 4.5 0 0120 10c0 5.8-8 11-8 11z"/></svg>',
+  eye: P('<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>'), book: P('<path d="M3 5a2 2 0 012-2h6v17H5a2 2 0 00-2 2zM21 5a2 2 0 00-2-2h-6v17h6a2 2 0 012 2z"/>'),
+  grid: P('<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>'), play: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4l13 8-13 8z"/></svg>', ok: P('<path d="M5 12l5 5 9-10"/>'),
+  stack: P('<path d="M12 3l9 5-9 5-9-5zM3 13l9 5 9-5M3 17.5l9 5 9-5"/>'), bk: P('<path d="M3 5a2 2 0 012-2h6v17H5a2 2 0 00-2 2zM21 5a2 2 0 00-2-2h-6v17h6a2 2 0 012 2z"/>')
+};
+const W_EMO = ['😀','😃','😄','😁','😆','😅','🤣','😂','🙂','🙃','😉','😊','😇','🥰','😍','🤩','😘','😗','😚','😋','😛','😜','🤪','😝','🤑','🤗','🤭','🤫','🤔','😐','😑','😶','😏','😒','🙄','😬','😌','😔','😪','😴','😷','🤒','🥵','🥶','😎','🤓','😕','😟','🙁','😮','😲','😳','🥺','😢','😭','😱','😖','😞','😤','😡','🤬','👍','👎','👏','🙏','🤝','💪','❤️','🧡','💛','💚','💙','💜','🖤','💔','🔥','✨','🎉','🌹','📚','☕'];
+const W_BUB = [['', 'ডিফল্ট'], ['1', 'সমুদ্র'], ['2', 'সূর্যাস্ত'], ['3', 'পান্না'], ['4', 'বেগুনি স্বপ্ন'], ['5', 'গোলাপি আউটলাইন']];
+const wBubGet = (cid) => store.get('jp_wbub_' + cid, '') || '';
+const wClrGet = (cid) => +store.get('jp_wclr_' + cid, 0) || 0;
 let wReply = null, wLP = null, wLPd = 0; const wMsgs = {};
 function wChHead(p, right) { return '<header class="hdr"><div class="hdr-row"><button class="icon-btn" data-act="back" aria-label="পেছনে" data-i="back"></button><div class="hdr-title" style="display:flex;align-items:center;gap:10px;min-width:0">' + wAv(p).replace('class="wav2"', 'class="wav2" style="width:38px;height:38px;font-size:16px"') + '<span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + esc(p.name || 'লেখক') + '</span></div>' + (right || '') + '</div></header>'; }
 function wRenderMsgs(s, me) {
-  const box = document.getElementById('wChBox'), on = box.dataset.n || 'লেখক';
-  box.innerHTML = s.docs.map((d) => {
+  const box = document.getElementById('wChBox'), on = box.dataset.n || 'লেখক'; const clr = wClrGet(box.dataset.c);
+  box.dataset.bub = wBubGet(box.dataset.c);
+  box.innerHTML = s.docs.filter((d) => (d.data().at || 0) > clr).map((d) => {
     const m = d.data(); wMsgs[d.id] = m; const re = m.re || {}, cnt = {}; Object.keys(re).forEach((u) => { cnt[re[u]] = (cnt[re[u]] || 0) + 1; });
     const rr = Object.keys(cnt).map((e) => '<span class="wre' + (re[me] === e ? ' me' : '') + '">' + esc(e) + (cnt[e] > 1 ? ' ' + bn(cnt[e]) : '') + '</span>').join('');
-    return '<div class="wb ' + (m.from === me ? 'me' : 'th') + '" data-mid="' + d.id + '">' + (m.rp ? '<div class="wq"><b>' + (m.rp.f === me ? 'আপনি' : esc(on)) + '</b>' + esc(m.rp.t) + '</div>' : '') + (m.text ? esc(m.text) : '') + '<small>' + wTm(m.at) + '</small>' + (rr ? '<div class="wres">' + rr + '</div>' : '') + '</div>';
+    return '<div class="wb ' + (m.from === me ? 'me' : 'th') + '" data-mid="' + d.id + '">' + (m.rp ? '<div class="wq"><b>' + (m.rp.f === me ? 'আপনি' : esc(on)) + '</b>' + esc(m.rp.t) + '</div>' : '') + (m.img ? '<img class="wim" src="' + esc(m.img) + '" alt="ছবি">' : '') + (m.text ? esc(m.text) : '') + '<small>' + wTm(m.at) + '</small>' + (rr ? '<div class="wres">' + rr + '</div>' : '') + '</div>';
   }).join('') || '<div class="wempty">এখনো কোনো মেসেজ নেই। প্রথম মেসেজটি পাঠান 👋</div>';
 }
 function wRpShow() { const b = document.getElementById('wRpBar'); if (!b) return; if (!wReply) { b.hidden = true; b.innerHTML = ''; return; } const bx = document.getElementById('wChBox'); b.hidden = false; b.innerHTML = '<span>↩ <b>' + (wReply.f === wMe() ? 'আপনি' : esc((bx && bx.dataset.n) || 'লেখক')) + '</b>: ' + esc(wReply.t) + '</span><button data-wm="rpx" aria-label="বাতিল">✕</button>'; }
@@ -2053,11 +2117,11 @@ async function wChat(uid) {
   const me = wMe(); if (!uid || uid === me) return wPage('মেসেজ', '<div class="wgate"><p>পেজ পাওয়া যায়নি</p></div>', 'msg');
   const [p, r] = await Promise.all([wProf(uid), wRel(uid)]), cid = wCid(me, uid), ok = r.friends && !r.iBlock && !r.heBlock;
   if (ok) { const ref = WR.fs.doc('chats/' + cid); if (!(await ref.get()).exists) await ref.set({ users: [me, uid].sort(), last: '', lastAt: Date.now(), lastFrom: '', unread: {} }); }
-  const head = wChHead(p, '<button class="icon-btn" data-wm="more" data-u="' + esc(uid) + '" data-b="' + (r.iBlock ? 1 : 0) + '" aria-label="আরও">' + WI.more + '</button>');
-  const foot = ok ? '<div class="wlock2"><div class="wrpb" id="wRpBar" hidden></div><div class="wcmp2"><textarea id="wChT" rows="1" maxlength="1000" placeholder="মেসেজ লিখুন"></textarea><button class="sd" data-wm="send" aria-label="পাঠান">' + WI.send + '</button></div></div>'
+  const head = wChHead(p, '<button class="icon-btn" data-wm="more" data-u="' + esc(uid) + '" data-b="' + (r.iBlock ? 1 : 0) + '" data-c="' + cid + '" aria-label="আরও">' + WI.more + '</button>');
+  const foot = ok ? '<div class="wlock2"><div class="wrpb" id="wRpBar" hidden></div><div class="wcmp2"><button data-wm="imgsheet" aria-label="ছবি">' + XI.img + '</button><button data-wm="emo" id="wEmoBtn" aria-label="ইমোজি">' + XI.smile + '</button><textarea id="wChT" rows="1" maxlength="1000" placeholder="একটি বার্তা লিখুন..."></textarea><button class="sd" data-wm="send" aria-label="পাঠান">' + WI.send + '</button></div><div class="wemp" id="wEmp" hidden></div><input type="file" id="wChImg" accept="image/*" hidden></div>'
     : '<div class="wlock2">' + (r.iBlock ? 'আপনি এই লেখককে ব্লক করেছেন<button data-wm="unblock" data-u="' + esc(uid) + '">আনব্লক</button>' : r.heBlock ? 'এই লেখক আপনাকে মেসেজ পাঠানোর অনুমতি দেননি' : 'মেসেজ পাঠাতে উভয়কে একে অপরকে ফলো করতে হবে') + '</div>';
   if (ok) wChatBind(cid, uid);
-  return head + '<main class="page"><div class="wchl" id="wChBox" data-c="' + cid + '" data-n="' + esc(p.name || 'লেখক') + '" data-u="' + esc(uid) + '"></div></main>' + foot;
+  return head + '<main class="page"><div class="wchl" id="wChBox" data-c="' + cid + '" data-n="' + esc(p.name || 'লেখক') + '" data-u="' + esc(uid) + '" data-bub="' + wBubGet(cid) + '"></div></main>' + foot;
 }
 function wChatBind(cid) {
   let n = 0; (function t() {
@@ -2107,8 +2171,18 @@ document.addEventListener('click', async (ev) => {
       case 'decline': await WR.fs.doc('follows/' + u + '_' + me).delete(); route(); break;
       case 'cancel': await WR.fs.doc('follows/' + me + '_' + u).delete(); route(); break;
       case 'send': await wSend(); break;
-      case 'img': { const f = document.getElementById('wChImg'); if (f) f.click(); break; }
-      case 'more': wModal('<div class="wmenu">' + (el.dataset.b === '1' ? '<button data-wm="unblock" data-u="' + esc(u) + '">🔓 আনব্লক করুন</button>' : '<button data-wm="block-ask" data-u="' + esc(u) + '">🚫 ব্লক করুন</button>') + '<button data-wm="close">বাতিল</button></div>'); break;
+      case 'img': { wModalX(); const f = document.getElementById('wChImg'); if (f) f.click(); break; }
+      case 'more': { const pn = wPins().indexOf(u) >= 0; wModal('<div class="wmenu"><button data-wm="pin" data-u="' + esc(u) + '">' + XI.pin + (pn ? 'পিন সরান' : 'চ্যাট পিন করুন') + '</button><button data-wm="viewprof" data-u="' + esc(u) + '">' + XI.user + 'প্রোফাইল দেখুন</button><button data-wm="bubble" data-c="' + esc(el.dataset.c || '') + '">' + XI.pal + 'চ্যাট বাবল পরিবর্তন করুন</button><button class="rd" data-wm="clear-ask" data-c="' + esc(el.dataset.c || '') + '">' + XI.trash + 'চ্যাট মুছুন</button>' + (el.dataset.b === '1' ? '<button data-wm="unblock" data-u="' + esc(u) + '">' + XI.block + 'আনব্লক করুন</button>' : '<button class="rd" data-wm="block-ask" data-u="' + esc(u) + '">' + XI.block + 'ব্লক করুন</button>') + '</div>'); break; }
+      case 'pin': wModalX(); wTogglePin(u, true); break;
+      case 'viewprof': { wModalX(); const pr = await wProf(u); const k = (pr && pr.name) ? pr.name : ''; if (k) nav('/author/' + enc(k)); else toast('প্রোফাইল পাওয়া যায়নি'); break; }
+      case 'bubble': { const cid = el.dataset.c, cur = wBubGet(cid); wModal('<div class="wmenu"><h3 style="margin:4px 8px 8px">চ্যাট বাবল</h3>' + W_BUB.map((b) => '<button class="wbp' + (b[0] === cur ? ' on' : '') + '" data-wm="bubset" data-c="' + esc(cid) + '" data-v="' + b[0] + '" data-bub="' + b[0] + '"><b>' + b[1] + '</b><div class="r"><div class="wb th">আপনি কেমন আছেন?</div><div class="wb me">ভালো আছি 😊</div></div></button>').join('') + '<button data-wm="close">বন্ধ করুন</button></div>'); break; }
+      case 'bubset': { store.set('jp_wbub_' + el.dataset.c, el.dataset.v || ''); const bx = document.getElementById('wChBox'); if (bx) bx.dataset.bub = el.dataset.v || ''; wModalX(); toast('বাবল বদলেছে'); break; }
+      case 'clear-ask': wModal('<div class="wlk"><h3>চ্যাট মুছবেন?</h3><p>শুধু আপনার ফোন থেকে এই চ্যাটের আগের মেসেজ মুছে যাবে। অন্য লেখকের কাছে মেসেজ থাকবে।</p><div class="lkb"><button data-wm="close">বাতিল</button><button class="pr" data-wm="clear-do" data-c="' + esc(el.dataset.c || '') + '">মুছুন</button></div></div>'); break;
+      case 'clear-do': store.set('jp_wclr_' + el.dataset.c, Date.now()); wModalX(); toast('চ্যাট মুছে ফেলা হয়েছে'); if (/^\/w\/chat\//.test(curPath)) route(); break;
+      case 'imgsheet': wModal('<div class="wsheet"><button data-wm="img">' + XI.img + 'গ্যালারি থেকে ছবি বাছাই</button></div>'); break;
+      case 'emo': { const pn = document.getElementById('wEmp'), bt = document.getElementById('wEmoBtn'); if (!pn) break; if (pn.hidden) { pn.hidden = false; pn.innerHTML = '<div class="eh"><span>জনপ্রিয় ইমোজি</span><button data-wm="emodel" aria-label="মুছুন">⌫</button></div><div class="eg">' + W_EMO.map((e) => '<button data-wm="emoadd" data-e="' + e + '">' + e + '</button>').join('') + '</div>'; if (bt) bt.innerHTML = XI.kb; } else { pn.hidden = true; if (bt) bt.innerHTML = XI.smile; const t = document.getElementById('wChT'); if (t) t.focus(); } break; }
+      case 'emoadd': { const t = document.getElementById('wChT'); if (t) { t.value += el.dataset.e; t.dispatchEvent(new Event('input', { bubbles: true })); } break; }
+      case 'emodel': { const t = document.getElementById('wChT'); if (t) { const a = Array.from(t.value); a.pop(); t.value = a.join(''); } break; }
       case 'block-ask': wModal('<div class="wlk"><h3>ব্লক করবেন?</h3><p>ব্লক করলে এই লেখক আর আপনাকে মেসেজ পাঠাতে পারবেন না। সেটিংসের "ব্লক করা লেখক" থেকে আনব্লক করলে আবার মেসেজ করা যাবে।</p><div class="lkb"><button data-wm="close">বাতিল</button><button class="pr" data-wm="block-do" data-u="' + esc(u) + '">ব্লক করুন</button></div></div>'); break;
       case 'block-do': {
         await WR.fs.doc('blocks/' + me + '_' + u).set({ by: me, target: u, at: Date.now() });
@@ -2138,6 +2212,7 @@ async function viewWriter(seg) {
     if (s1 === 'chat') return await wChat(seg[2] || '');
     if (s1 === 'likes') return await wLikes(seg[2]);
     if (s1 === 'graphs') return await wGraphs(seg[2]);
+    if (s1 === 'rules') return wRules();
     if (s1 === 'book') return await wBookForm(seg[2] || '');
     if (s1 === 'chs') return await wChs(seg[2] || '');
     if (s1 === 'ch') return await wEditor(seg[2] || '', seg[3] || '');
@@ -2316,18 +2391,32 @@ async function wSyncBook(E, mode, f) {
 }
 /* ---- গল্প যোগ/সম্পাদনা ---- */
 let wCover = null;
+const WRULES_V = 2, wRulesOk = () => store.get('jp_wrules_' + wMe(), 0) === WRULES_V;
+function wRules() {
+  const ok = wRulesOk(), li = (a) => '<ul>' + a.map((x) => '<li>' + x + '</li>').join('') + '</ul>';
+  const body = '<div class="wrules"><p class="mt">সংস্করণ ' + bn(WRULES_V) + '</p><p style="line-height:1.8">যাত্রাপথে প্রথম গল্প জমা দেওয়ার আগে প্রত্যেক লেখককে এই নিয়মাবলিতে সম্মতি দিতে হবে। নিয়ম বদলালে নতুন সংস্করণে আবার সম্মতি চাওয়া হবে।</p>' +
+    '<h3>১. শুধু নিজের লেখা</h3>' + li(['যাত্রাপথে শুধু নিজের লেখা মৌলিক গল্প প্রকাশ করা যায়। প্রতিটি গল্পে এই ঘোষণা দিতে হয়।', 'বই, পত্রিকা, ওয়েবসাইট, ফেসবুক পোস্ট বা অন্য লেখকের লেখা থেকে নকল করা যাবে না, অংশবিশেষও নয়।', 'অন্যের লেখার অনুবাদ চলবে না, ফ্যান-অনুবাদও নয়।', 'কপিরাইট থাকা কাহিনির চরিত্র নিয়ে গল্প লেখা যাবে না।', 'জমা দেওয়া প্রতিটি পর্ব পর্যালোচনায় যায়। নকল ধরা পড়লে পর্ব বাতিল হবে।']) +
+    '<h3>২. প্রাপ্তবয়স্ক বিষয়</h3>' + li(['যৌন নির্যাতন বা ধর্ষণকে উপভোগ্য বা প্রশংসনীয় করে দেখানো যাবে না। কাহিনির প্রয়োজনে ঘটনার উল্লেখ থাকতে পারে, বিস্তারিত বর্ণনা নয়।', '১৮ বছরের কম বয়সী কাউকে জড়িয়ে কোনো যৌন বা যৌন-ইঙ্গিতপূর্ণ বিষয় কোনো অবস্থাতেই প্রকাশ করা যাবে না, গল্পের ছলেও নয়। এমন লেখা পেলে অ্যাকাউন্ট সঙ্গে সঙ্গে বন্ধ করা হয়।', 'প্রাপ্তবয়স্ক বিষয়ের গল্পে "১৮+ গল্প" অপশন চালু করতে হবে। ১৮+ হিসেবে প্রকাশিত গল্প লেখক নিজে আর সাধারণ গল্প করতে পারবেন না এবং এর প্রতিটি পর্ব পর্যালোচনার পর প্রকাশ হবে।']) +
+    '<h3>৩. মানুষের প্রতি সম্মান</h3>' + li(['ধর্ম, জাতি, লিঙ্গ, প্রতিবন্ধিতা বা অন্য কোনো পরিচয়ের কারণে ঘৃণা ছড়ানো লেখা চলবে না।', 'বাস্তব কোনো মানুষকে হয়রানি, অপমান বা তাঁর নামে মিথ্যা অভিযোগ করা যাবে না; কারও ব্যক্তিগত তথ্য প্রকাশ করা যাবে না।']) +
+    '<h3>৪. থ্রিলার ও ভৌতিক গল্পে সহিংসতা</h3>' + li(['কাহিনির প্রয়োজনে অপরাধ, রহস্য, ভয় ও সহিংসতা থাকতে পারে।', 'বাস্তব সহিংসতার প্রশংসা, উস্কানি বা বিপজ্জনক কাজের নির্দেশনা দেওয়া যাবে না।']) +
+    '<h3>৫. নিয়ম ভাঙলে</h3>' + li(['নিয়ম ভাঙলে পর্ব বা গল্প সরিয়ে দেওয়া হতে পারে। বারবার ভাঙলে লেখক অ্যাকাউন্ট বন্ধ হবে।']) + '</div>' +
+    (ok ? '<p class="wnote">আপনি এই নিয়মাবলিতে সম্মতি দিয়েছেন।</p>' : '<label class="wdecl"><input type="checkbox" id="wRulesCk"><span>আমি লেখার নিয়মাবলি পড়েছি এবং এতে সম্মতি দিচ্ছি।</span></label><div class="werr" id="wErr" role="alert"></div><button class="wbtn" data-w="rules-ok">সম্মতি দিয়ে এগোন</button>');
+  return wPage('লেখার নিয়মাবলি', body, null, true);
+}
 async function wBookForm(id) {
+  if (!id && !wRulesOk()) return wRules();
   const cats = await wCats(); let b = null;
   if (id) { b = await wBook(id); if (!b) return wPage('গল্প', '<div class="wgate"><p>গল্প পাওয়া যায়নি</p></div>', 'books'); }
   wCover = b ? (b.cover || null) : null; WR.dirty = false;
   const lock = false;
   const body = (b && b.pub ? '<div class="wcard">এই গল্প লাইভ আছে। সেভ করলে পরিবর্তন সাথে সাথে পাঠকদের কাছে দেখা যাবে।</div>' : '') +
     wFld('গল্পের নাম *', 'wb-t', b ? b.title : '', { dis: lock }) + wFld('লেখকের নাম', 'wb-a', b ? b.author : ((WR.prof && WR.prof.name) || ''), { dis: lock }) +
-    '<div class="wfl"><label for="wb-c">ক্যাটাগরি *</label><select id="wb-c"' + (lock ? ' disabled' : '') + '><option value="">নির্বাচন করুন</option>' + cats.map((c) => '<option value="' + c.id + '"' + (b && (b.cats || [])[0] === c.id ? ' selected' : '') + '>' + esc(c.name) + '</option>').join('') + '</select></div>' +
-    '<div class="wfl"><label for="wb-s">স্ট্যাটাস</label><select id="wb-s"' + (lock || (b && b.done) ? ' disabled' : '') + '><option value="0"' + (b && b.done ? '' : ' selected') + '>চলমান</option><option value="1"' + (b && b.done ? ' selected' : '') + '>সমাপ্ত</option></select></div>' +
+    '<div class="wfl"><label>ক্যাটাগরি * <small style="color:var(--muted)">(প্রথমে যেটি বাছবেন সেটিই মূল ধরন)</small></label><input type="hidden" id="wb-c" value="' + (b && (b.cats || [])[0] ? b.cats[0] : '') + '"><div class="wcats" id="wCats">' + cats.map((c) => '<button type="button" data-w="pick-cat" data-v="' + c.id + '" class="' + (b && (b.cats || [])[0] === c.id ? 'on' : '') + '">' + esc(c.name) + '</button>').join('') + '</div></div>' +
+    '<div class="wtgr"><div><b>গল্পটি সম্পূর্ণ</b><small>শেষ পর্ব প্রকাশের পর চালু করুন</small></div><input type="checkbox" class="wtg" id="wb-s"' + (b && b.done ? ' checked disabled' : '') + ' aria-label="গল্পটি সম্পূর্ণ"></div>' +
+    '<div class="wtgr"><div><b>১৮+ গল্প</b><small>প্রাপ্তবয়স্ক বিষয়ের গল্প। পাঠকেরা গল্পে ১৮+ চিহ্ন দেখবেন; প্রতিটি পর্ব পর্যালোচনার পর প্রকাশিত হবে।</small></div><input type="checkbox" class="wtg" id="wb-ad"' + (b && b.adult ? ' checked disabled' : (b && b.pub && !wIsVip() ? ' disabled' : '')) + ' aria-label="১৮+ গল্প"></div>' +
     wFld('সংক্ষিপ্ত বিবরণ (ঐচ্ছিক)', 'wb-d', b ? b.desc : '', { ta: 1, dis: lock }).replace('<textarea ', lock ? '<textarea disabled ' : '<textarea ') +
     '<h2 style="margin-top:18px">কভার ইমেজ *</h2><button type="button" class="wcard" style="width:100%;text-align:center;min-height:150px;display:grid;place-items:center;font:inherit;color:var(--text)" data-w="pick-cov"' + (lock ? ' disabled' : '') + ' aria-label="কভার ছবি নির্বাচন করুন"><span id="wCovBox">' + (wCover ? '<img src="' + esc(wCover) + '" alt="কভার" style="max-height:230px;border-radius:12px">' : WI.plus + '<br>ক্লিক করে ছবি নির্বাচন করুন') + '</span></button><input type="file" id="wCovF" accept="image/*" hidden>' +
-    '<div class="werr" id="wErr" role="alert"></div>' + (lock ? '' : '<button class="wbtn" data-w="save-book" data-id="' + esc(id) + '" id="wBtn">সেভ করুন</button><p class="wnote">' + (b && b.pub ? 'এই গল্প লাইভ আছে — সেভ করলে পরিবর্তন সাথে সাথে বসে যাবে।' : 'সেভ করলে গল্পটি রিভিউয়ের জন্য অ্যাডমিনের কাছে যাবে। অনুমোদনের পর অ্যাপে লাইভ হবে।') + '</p>' + (id ? '<button class="wbtn ghost" style="margin-top:10px;color:#e5484d" data-w="del-book" data-id="' + esc(id) + '" data-t="' + esc(b ? b.title : '') + '">এই গল্প মুছুন</button>' : ''));
+    (id ? '' : '<label class="wdecl"><input type="checkbox" id="wb-dc"><span>আমি ঘোষণা করছি, গল্পটি আমার নিজের লেখা। এটি কোনো বই, অনুবাদ বা অন্যের লেখা থেকে নেওয়া নয়।</span></label>') + '<div class="werr" id="wErr" role="alert"></div>' + (lock ? '' : '<button class="wbtn" data-w="save-book" data-id="' + esc(id) + '" id="wBtn">সেভ করুন</button><p class="wnote">' + (b && b.pub ? 'এই গল্প লাইভ আছে — সেভ করলে পরিবর্তন সাথে সাথে বসে যাবে।' : 'সেভ করলে গল্পটি রিভিউয়ের জন্য অ্যাডমিনের কাছে যাবে। অনুমোদনের পর অ্যাপে লাইভ হবে।') + '</p>' + (id ? '<button class="wbtn ghost" style="margin-top:10px;color:#e5484d" data-w="del-book" data-id="' + esc(id) + '" data-t="' + esc(b ? b.title : '') + '">এই গল্প মুছুন</button>' : ''));
   return wPage(id ? 'গল্প সম্পাদনা করুন' : 'গল্প যোগ করুন', body, null, true);
 }
 
@@ -2353,7 +2442,7 @@ async function wEditor(bid, cid) {
   if (!cid && b.done) return wPage('পর্ব', '<div class="wgate"><p>গল্পটি সমাপ্ত — আর নতুন পর্ব যোগ করা যাবে না</p></div>', 'books');
   const lock = false; const nn = c ? c.n : (cs.reduce((m, x) => Math.max(m, x.n || 0), 0) + 1);
   const dr = store.get(wDraftKey(bid, cid), null); const html = dr && dr.html ? wSan(dr.html) : (c ? (c.html ? wSan(c.html) : esc(c.text || '').replace(/\n/g, '<br>')) : '');
-  WR.dirty = false; WR.ed = { bid, cid, nums: cs.filter((x) => x.id !== cid).map((x) => x.n), lock, pub: !!(c && c.pub), oldN: c ? c.n : null, fin: false, fin0: !!(c && c.fin) };
+  WR.dirty = false; WR.ed = { adult: !!b.adult, bid, cid, nums: cs.filter((x) => x.id !== cid).map((x) => x.n), lock, pub: !!(c && c.pub), oldN: c ? c.n : null, fin: false, fin0: !!(c && c.fin) };
   const body = (c && c.pub ? '<div class="wcard">এই পর্ব লাইভ আছে। সেভ করলে পরিবর্তন সাথে সাথে পাঠকদের কাছে দেখা যাবে।</div>' : '') +
     '<div class="wfl"><label for="wc-n">পর্ব নম্বর</label><input id="wc-n" type="number" inputmode="numeric" min="1" value="' + nn + '"' + (lock ? ' disabled' : '') + '></div>' + wFld('শিরোনাম (ঐচ্ছিক)', 'wc-t', c ? c.title : '', { dis: lock }) + '<div class="wfl"><label for="wc-sc">প্রকাশের সময় (ঐচ্ছিক — অনুমোদনের পর এই সময়ে পাঠকদের কাছে আসবে)</label><input id="wc-sc" type="datetime-local" value="' + (c && c.sc ? new Date(c.sc - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 16) : '') + '"></div>' + wFinRow(b, c) +
     '<div style="margin-top:16px"><div class="wtb" role="toolbar" aria-label="লেখার টুল"><button type="button" data-w="fmt" data-c="bold" aria-label="বোল্ড"><b>B</b></button><button type="button" data-w="fmt" data-c="italic" aria-label="ইটালিক"><i>I</i></button></div>' +
@@ -2368,7 +2457,7 @@ function wProfile() {
   const p = WR.prof || {}; wPhoto = p.photo || ''; 
   return wPage('আমার প্রোফাইল', wAvatar(p.photo, p.name) + wFld('আপনার নাম', 'wp-n', p.name) + wFld('ইমেইল', 'wp-e', WR.user.email, { t: 'email', dis: 1 }) + wFld('মোবাইল নাম্বার', 'wp-m', p.phone, { t: 'tel', im: 'numeric' }) +
     wFld('আপনার সম্পর্কে (Bio)', 'wp-b', p.bio, { ta: 1 }) + '<div class="werr" id="wErr" role="alert"></div><button class="wbtn" data-w="save-prof" id="wBtn">আপডেট করুন</button>' +
-    '<div style="text-align:center"><button class="wbtn out" data-w="logout">' + WI.out + 'লগ আউট</button></div>', 'prof', false);
+    '<button class="wbtn ghost" style="margin-top:12px" data-w="go" data-href="/w/rules">লেখার নিয়মাবলি</button><div style="text-align:center"><button class="wbtn out" data-w="logout">' + WI.out + 'লগ আউট</button></div>', 'prof', false);
 }
 
 /* ---- ইভেন্ট ---- */
@@ -2431,14 +2520,16 @@ async function wClick(ev) {
         if (!(f >= VIP_F && v >= VIP_V && l >= VIP_L)) { toast('শর্ত এখনো পূরণ হয়নি'); break; }
         try { await WR.fs.doc('vipreqs/' + WR.user.uid).set({ uid: WR.user.uid, name: (WR.prof && WR.prof.name) || '', followers: f, views: v, likes: l, note: ((document.getElementById('wv-note') || {}).value || '').slice(0, 300), status: 'new', at: Date.now() }); toast('আবেদন জমা হয়েছে'); route(); } catch (x) { toast(wErr(x)); } break;
       }
+      case 'pick-cat': { const hc = document.getElementById('wb-c'); if (hc) hc.value = el.dataset.v; document.querySelectorAll('#wCats button').forEach((x) => x.classList.toggle('on', x === el)); break; }
+      case 'rules-ok': { const ck = document.getElementById('wRulesCk'); if (!ck || !ck.checked) return wSet('সম্মতির ঘরে টিক দিন'); store.set('jp_wrules_' + wMe(), WRULES_V); nav('/w/book', true); break; }
       case 'save-book': {
-        const id = el.dataset.id, t = wv('wb-t'), au = wv('wb-a'), ci = +wv('wb-c'), dn = wv('wb-s') === '1', ds = wv('wb-d');
-        const ty = (document.getElementById('wb-ty') || {}).value || 'book'; if (!id) { if (ty === 'voice' && !(WR.perms && WR.perms.audio === true)) return wSet('অডিওবুক দেওয়ার অনুমতি এখন বন্ধ আছে'); if (ty === 'book' && WR.perms && WR.perms.text === false) return wSet('টেক্সট বুক প্রকাশ সাময়িকভাবে বন্ধ আছে'); } if (!t) return wSet('গল্পের নাম লিখুন'); if (!ci) return wSet('ক্যাটাগরি নির্বাচন করুন'); if (!wCover) return wSet('কভার ছবি দিন');
+        const id = el.dataset.id, t = wv('wb-t'), au = wv('wb-a'), ci = +wv('wb-c'), dn = !!(document.getElementById('wb-s') || {}).checked, ad = !!(document.getElementById('wb-ad') || {}).checked, ds = wv('wb-d');
+        const ty = (document.getElementById('wb-ty') || {}).value || 'book'; if (!id) { if (ty === 'voice' && !(WR.perms && WR.perms.audio === true)) return wSet('অডিওবুক দেওয়ার অনুমতি এখন বন্ধ আছে'); if (ty === 'book' && WR.perms && WR.perms.text === false) return wSet('টেক্সট বুক প্রকাশ সাময়িকভাবে বন্ধ আছে'); } if (!t) return wSet('গল্পের নাম লিখুন'); if (!ci) return wSet('ক্যাটাগরি নির্বাচন করুন'); if (!wCover) return wSet('কভার ছবি দিন'); if (!id && !(document.getElementById('wb-dc') || {}).checked) return wSet('"আমি ঘোষণা করছি" ঘরে টিক দিন');
         const cat = (WR.cats.find((c) => c.id === ci) || {}).name || ''; wSet(''); wBusy(1);
         try {
           const f = { title: t, author: au || (WR.prof && WR.prof.name) || '', cat, cats: [ci], done: dn, status: dn ? 'সমাপ্ত' : 'চলমান', desc: ds, cover: wCover, type: ty };
-          if (id) { const cur = await wBook(id); await WR.fs.doc('books/' + id).update(cur && cur.pub ? f : wIsVip() ? Object.assign(f, { pub: true, st: 'live' }) : Object.assign(f, { st: 'review' })); toast('সংরক্ষিত হয়েছে'); WR.dirty = false; goBack(); }
-          else { const nid = String(wnid()); await WR.fs.doc('books/' + nid).set(Object.assign(f, wIsVip() ? { pub: true, st: 'live', publishedAt: new Date().toISOString() } : { pub: false, st: 'review' }, { id: nid, ownerUid: WR.user.uid, ownerName: (WR.prof && WR.prof.name) || '', createdAt: Date.now(), reads: 0, likes: 0, dislikes: 0, chs: [], audio: [] })); toast(wIsVip() ? 'গল্প তৈরি হয়েছে — এবার পর্ব যোগ করুন' : 'গল্প রিভিউয়ের জন্য পাঠানো হয়েছে — এবার পর্ব যোগ করুন'); WR.dirty = false; nav('/w/chs/' + nid, true); }
+          if (id) { const cur = await wBook(id); if (!(cur && cur.pub && !wIsVip())) f.adult = ad || !!(cur && cur.adult); else if (cur && cur.adult) f.adult = true; await WR.fs.doc('books/' + id).update(cur && cur.pub ? f : (wIsVip() && !f.adult) ? Object.assign(f, { pub: true, st: 'live' }) : Object.assign(f, { st: 'review' })); toast('সংরক্ষিত হয়েছে'); WR.dirty = false; goBack(); }
+          else { const nid = String(wnid()); await WR.fs.doc('books/' + nid).set(Object.assign(f, (wIsVip() && !ad) ? { pub: true, st: 'live', publishedAt: new Date().toISOString() } : { pub: false, st: 'review' }, { adult: ad, id: nid, ownerUid: WR.user.uid, ownerName: (WR.prof && WR.prof.name) || '', createdAt: Date.now(), reads: 0, likes: 0, dislikes: 0, chs: [], audio: [] })); toast((wIsVip() && !ad) ? 'গল্প তৈরি হয়েছে — এবার পর্ব যোগ করুন' : 'গল্প রিভিউয়ের জন্য পাঠানো হয়েছে — এবার পর্ব যোগ করুন'); WR.dirty = false; nav('/w/chs/' + nid, true); }
         } catch (x) { wSet(wErr(x)); wBusy(0); } break;
       }
       case 'del-book': {
@@ -2451,7 +2542,7 @@ async function wClick(ev) {
         wSet(''); wBusy(1);
         try {
           const f = { n, title: ti || ('পর্ব ' + n), text: text.replace(/\n+/g, '\n\n'), html: wSan(ed.innerHTML) }; if (E.fin) f.fin = true; { const sv = wv('wc-sc'); f.sc = sv ? new Date(sv).getTime() : 0; }
-          const vip = wIsVip(); let ncid = E.cid; if (vip) { f.pub = true; if (!E.cid) f.pa = Date.now(); }
+          const vip = wIsVip() && !E.adult; let ncid = E.cid; if (vip) { f.pub = true; if (!E.cid) f.pa = Date.now(); }
           if (E.cid) await WR.fs.doc('books/' + E.bid + '/chapters/' + E.cid).update(f);
           else { const id = String(wnid()); ncid = id; await WR.fs.doc('books/' + E.bid + '/chapters/' + id).set(Object.assign(f, { id: +id, b: +E.bid, pub: vip, audio: null, d: Date.now(), v: 0, ownerUid: WR.user.uid })); }
           if (vip) await wVipChapter(E, ncid, f); else if (E.cid) await wSyncBook(E, 'upd', f); await wFinishBook(E);
@@ -2555,11 +2646,12 @@ async function viewAuthor(key) {
   const p = await getProfile(uid); window.__auP = p;
   const reads = list.reduce((a, b) => a + (b.reads || 0), 0), likes = list.reduce((a, b) => a + (b.likes || 0), 0);
   const fol = isFollow(key);
-  return headerPage('লেখক', true) + '<main class="page auth2"><div class="aprow"><div class="apinfo"><h2>' + esc(name) + VER + '<span class="vs" data-vu="' + esc(uid) + '"></span></h2>' +
-    '<div class="apst"><span><b id="folN">' + bn(Math.max(0, (p && p.followers) || 0)) + '</b>ফলোয়ার</span><span><b>' + fmtN(likes) + '</b>লাইক</span><span><b>' + fmtN(reads) + '</b>ভিউ</span></div>' +
-    '<div class="aptot"><b>' + bn(list.length) + '</b> মোট বই</div></div>' + avBox((p && p.photo) || (list.find((b) => b.authorPhoto) || {}).authorPhoto, name, 'big') + '</div>' +
-    '<button class="folbtn wide' + (fol ? ' on' : '') + '" data-s="follow" data-k="' + esc(key) + '" data-n="' + esc(name) + '" aria-pressed="' + fol + '">' + (fol ? '✓ ফলো করছেন' : '+ ফলো করুন') + '</button>' + (uid ? '<button class="folbtn wide" style="margin-top:8px" data-wm="open" data-u="' + esc(uid) + '" data-n="' + esc(name) + '" data-k="' + esc(key) + '">✉ মেসেজ</button>' : '') +
-    '<div class="apbio">' + (p && p.bio ? esc(p.bio) : '<span style="opacity:.7">লেখক এখনো নিজের সম্পর্কে কিছু লেখেননি।</span>') + '</div><div id="auBody">' + auBody() + '</div></main>';
+  const bio = (p && p.bio) || '';
+  return headerPage('লেখক', true) + '<main class="page auth2"><div class="aprow2"><div class="apinfo"><h2>' + esc(name) + VER + '<span class="vs" data-vu="' + esc(uid) + '"></span></h2>' +
+    '<div class="apst2"><span>' + XI.user + '<b id="folN">' + fmtN(Math.max(0, (p && p.followers) || 0)) + '</b>ফলোয়ার</span><span>' + XI.heart + '<b>' + fmtN(likes) + '</b>লাইক</span><span>' + XI.eye + '<b>' + fmtN(reads) + '</b>ভিউ</span></div></div>' + avBox((p && p.photo) || (list.find((b) => b.authorPhoto) || {}).authorPhoto, name, 'big') + '</div>' +
+    '<div class="apbk">' + XI.book + '<span><b>' + bn(list.length) + '</b> টি বই</span></div>' +
+    '<div class="apbtns' + (uid ? '' : ' one') + '"><button class="folbtn wide' + (fol ? ' on' : '') + '" data-s="follow" data-k="' + esc(key) + '" data-n="' + esc(name) + '" aria-pressed="' + fol + '">' + (fol ? '✓ ফলো করছেন' : XI.uplus + ' ফলো করুন') + '</button>' + (uid ? '<button class="folbtn wide" data-wm="open" data-u="' + esc(uid) + '" data-n="' + esc(name) + '" data-k="' + esc(key) + '">' + XI.mail + ' মেসেজ</button>' : '') + '</div>' +
+    '<div class="apabout" id="apAbout"><h4>' + XI.info + 'লেখক পরিচিতি</h4><p>' + (bio ? esc(bio) : '<span style="opacity:.7">লেখক এখনো নিজের সম্পর্কে কিছু লেখেননি।</span>') + '</p>' + (bio.length > 90 ? '<button data-s="au-more">আরও পড়ুন →</button>' : '') + '</div><div id="auBody">' + auBody() + '</div></main>';
 }
 function auBody() {
   if (auTab === 'about') {
@@ -2567,8 +2659,9 @@ function auBody() {
   }
   const run = auBooks.filter((b) => b.status !== 'সমাপ্ত').length, dn = auBooks.length - run;
   const L = auSt === 'সব' ? auBooks : auBooks.filter((b) => (auSt === 'সমাপ্ত') === (b.status === 'সমাপ্ত'));
-  return '<div class="aufl"><h3>প্রকাশিত বইসমূহ <em>' + bn(auBooks.length) + '</em></h3><div class="fchips" style="margin:0;padding:0">' + [['সব', auBooks.length], ['চলমান', run], ['সমাপ্ত', dn]].map((x) => '<button class="chip' + (auSt === x[0] ? ' on' : '') + '" data-s="au-st" data-v="' + x[0] + '">' + x[0] + ': ' + bn(x[1]) + '</button>').join('') + '</div></div>' +
-    (L.length ? '<div class="books grid">' + L.map((b) => pcard(b)).join('') + '</div>' : '<div class="empty">কোনো বই নেই।</div>');
+  const ci = { 'সব': XI.grid, 'চলমান': XI.play, 'সমাপ্ত': XI.ok };
+  return '<div class="aufl2"><h3>' + XI.stack + 'প্রকাশিত বইসমূহ</h3><span class="cn">' + bn(auBooks.length) + ' টি বই</span></div><div class="fchips" style="margin:0 0 14px;padding:0">' + [['সব', auBooks.length], ['চলমান', run], ['সমাপ্ত', dn]].map((x) => '<button class="chip' + (auSt === x[0] ? ' on' : '') + '" data-s="au-st" data-v="' + x[0] + '">' + ci[x[0]] + x[0] + '</button>').join('') + '</div>' +
+    (L.length ? '<div class="books grid">' + L.map((b) => pcard(b, b.status === 'সমাপ্ত' ? 'সমাপ্ত' : 'চলমান')).join('') + '</div>' : '<div class="empty">কোনো বই নেই।</div>');
 }
 async function doFollow(key, name) {
   const f = getFollow(); const on = !f[key];
@@ -2577,7 +2670,7 @@ async function doFollow(key, name) {
   const uid = (window.__auKey === key ? window.__auUid : '');
   if (uid && SFB()) { try { await SFB().doc('profiles/' + uid).update({ followers: SINC(on ? 1 : -1) }); if (PROFC[uid]) PROFC[uid].followers = Math.max(0, (PROFC[uid].followers || 0) + (on ? 1 : -1)); } catch (e) { /* ignore */ } }
   toast(on ? 'ফলো করা হয়েছে' : 'ফলো বাতিল করা হয়েছে'); wFollowSync(uid, name, on);
-  const b = $('.folbtn'); if (b) { b.classList.toggle('on', on); b.textContent = on ? '✓ ফলো করছেন' : '+ ফলো করুন'; b.setAttribute('aria-pressed', on); }
+  const b = $('.folbtn'); if (b) { b.classList.toggle('on', on); b.innerHTML = on ? '✓ ফলো করছেন' : XI.uplus + ' ফলো করুন'; b.setAttribute('aria-pressed', on); }
   const n = $('#folN'); if (n && PROFC[uid]) n.textContent = bn(Math.max(0, PROFC[uid].followers || 0));
 }
 function followedHtml() {
@@ -2668,12 +2761,12 @@ function rvDraw() {
   const c = $('#rvCnt'); if (c) c.textContent = bn(rvList.length);
 }
 async function rvLoad(id) {
-  rvBook = id; rvRate = 0; const w = $('#tabRv'); const f = SFB();
+  rvBook = id; rvRate = 0; const w = $('#tabRv'); let f = SFB(); if (!f) { try { await api('/categories'); } catch (e) {} f = SFB(); }
   rvOk = !!(store.get('jp_reviewed', {})[id]);
   if (!f) { if (w) w.innerHTML = '<div class="empty">রিভিউ লোড করা যায়নি।</div>'; return; }
   if (w) w.innerHTML = '<div class="empty">লোড হচ্ছে…</div>';
   try { const q = await f.collection('books/' + id + '/comments').orderBy('at', 'desc').limit(100).get(); rvList = q.docs.map((d) => Object.assign({ id: d.id }, d.data())); if (rvList.some((x) => x.id === myUid())) rvOk = true; rvDraw(); }
-  catch (e) { if (w) w.innerHTML = '<div class="empty">রিভিউ লোড করা যায়নি। ইন্টারনেট দেখুন।</div>'; }
+  catch (e) { if (w) w.innerHTML = '<div class="empty">রিভিউ লোড করা যায়নি।' + ((e && e.code === 'permission-denied') ? ' (রুলস পাবলিশ করুন)' : ' ইন্টারনেট দেখুন।') + '</div>'; }
 }
 async function rvSend() {
   const err = (m) => { const e = $('#rvErr'); if (e) e.textContent = m; };
@@ -2701,6 +2794,7 @@ document.addEventListener('click', (ev) => {
   else if (a === 'sr-cat') { srCat = el.dataset.v; drawSearch(); }
   else if (a === 'nt-tab') { ntTab = el.dataset.v; $$('.nttabs button').forEach((x) => x.classList.toggle('on', x === el)); $('#ntBody').innerHTML = ntBody(); }
   else if (a === 'au-tab') { auTab = el.dataset.v; $$('.autabs button').forEach((x) => x.classList.toggle('on', x === el)); $('#auBody').innerHTML = auBody(); }
+  else if (a === 'au-more') { const ab = $('#apAbout'); if (ab) { ab.classList.toggle('open'); el.textContent = ab.classList.contains('open') ? 'কম দেখুন' : 'আরও পড়ুন →'; } }
   else if (a === 'au-st') { auSt = el.dataset.v; $('#auBody').innerHTML = auBody(); }
   else if (a === 'book-menu') bookMenu(el.dataset.id, el.dataset.t);
   else if (a === 'report-open') reportSheet(el.dataset.id, el.dataset.t);
@@ -2893,7 +2987,7 @@ const lim = (a) => a;
 function pcard(b, badge) {
   const act = 'book';
   return '<div class="bkc" data-act="' + act + '" data-id="' + esc(b.id) + '"><img src="' + esc(b.cover) + '" alt="' + esc(b.title) + '" loading="lazy" decoding="async">' +
-    '<span class="bkv">' + ic('eye') + fmtN(b.reads || 0) + '</span>' + (badge ? '<span class="bkn">' + badge + '</span>' : '') +
+    '<span class="bkv">' + ic('eye') + fmtN(b.reads || 0) + '</span>' + (badge ? '<span class="bkn">' + badge + '</span>' : '') + (b.adult ? '<span class="bka">১৮+</span>' : '') +
     '<div class="bkt"><b>' + esc(b.title) + '</b><span>' + esc(b.author) + VER + '</span></div></div>';
 }
 function gcard(b, audio) {
@@ -3670,9 +3764,11 @@ function cxLoadAuth() {
   return new Promise((ok, no) => { if (firebase.auth) return ok(); const t = ['https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js', 'https://cdn.jsdelivr.net/npm/firebase@10.12.2/firebase-auth-compat.js']; let i = 0;
     (function go() { const el = document.createElement('script'); el.src = t[i]; el.onload = () => ok(); el.onerror = () => { el.remove(); if (++i < t.length) go(); else no(new Error('auth')); }; document.head.append(el); })(); });
 }
+let cxAuthErr = '', cxErr = null;
 async function cxAuth() {
-  try { if (!window.firebase) return false; await cxLoadAuth(); const a = firebase.auth(); if (a.currentUser) cxMe = a.currentUser.uid; else { const r = await a.signInAnonymously(); cxMe = r.user.uid; } return true; } catch (e) { return false; }
+  try { if (!window.firebase) return false; await cxLoadAuth(); const a = firebase.auth(); if (a.currentUser) cxMe = a.currentUser.uid; else { const r = await a.signInAnonymously(); cxMe = r.user.uid; } cxAuthErr = ''; return true; } catch (e) { cxAuthErr = (e && e.code) || 'auth'; return false; }
 }
+const cxWhy = (e) => (cxAuthErr === 'auth/operation-not-allowed' || cxAuthErr === 'auth/admin-restricted-operation') ? ' (অ্যাডমিন: Firebase-এ Anonymous সাইন-ইন চালু করুন)' : (e && e.code === 'permission-denied') ? ' (রুলস পাবলিশ করুন)' : '';
 const cxMyR = () => store.get('jp_preact', {});
 const cxMyCm = () => store.get('jp_mycm', []);
 const cxHue = (s) => { let h = 0; String(s || '').split('').forEach((c) => { h = (h * 31 + c.charCodeAt(0)) % 360; }); return h; };
@@ -3745,7 +3841,7 @@ async function cxSend() {
       toast('পোস্ট অ্যাডমিনের অনুমোদনের জন্য পাঠানো হয়েছে');
     }
     const c = $('#cxCompose'); if (c) c.innerHTML = ''; $$('.cxopts button').forEach((b) => b.classList.remove('on')); cxLoad();
-  } catch (e) { err('পোস্ট পাঠানো যায়নি। ইন্টারনেট দেখুন, তারপর আবার চেষ্টা করুন'); if (btn) btn.disabled = false; }
+  } catch (e) { err('পোস্ট পাঠানো যায়নি' + (cxWhy(e) || '। ইন্টারনেট দেখুন, তারপর আবার চেষ্টা করুন')); if (btn) btn.disabled = false; }
   cxBusy = false;
 }
 function cxReact(id, r) {
@@ -3785,7 +3881,7 @@ function cxSheetHtml() {
   const item = (c, rp) => '<div class="cxci' + (rp ? ' rp' : '') + '"><b>' + esc(c.name || 'অতিথি পাঠক') + '</b>' + (c.uid && c.uid === p.uid ? '<span class="cxtag">লেখক</span>' : '') + '<small>' + cmDate(c.at) + '</small>' + (c.rn ? '<div><small style="margin:0">↪ ' + esc(c.rn) + '-কে উত্তর</small></div>' : '') + '<p>' + esc(c.text) + '</p>' +
     '<div class="cxcb"><button data-cx="reply" data-cid="' + esc(rp ? c.rp : c.id) + '" data-n="' + esc(c.name || 'অতিথি পাঠক') + '">উত্তর দিন</button>' + (c.uid === me ? '<button class="dl" data-cx="cdel" data-cid="' + esc(c.id) + '">মুছুন</button>' : '') + '</div></div>';
   let l;
-  if (cxCms === null) l = '<div class="empty">লোড করা যায়নি।</div>';
+  if (cxCms === null) l = '<div class="empty">লোড করা যায়নি।' + cxWhy(cxErr) + '</div>';
   else if (!cxCms.length) l = '<div class="empty">এখনো কোনো মন্তব্য নেই।</div>';
   else {
     const ids = {}; cxCms.forEach((c) => { ids[c.id] = 1; }); const tops = cxCms.filter((c) => !c.rp || !ids[c.rp]).sort((a, b) => (b.at || 0) - (a.at || 0));
@@ -3796,21 +3892,21 @@ function cxSheetHtml() {
     '<p class="acerr" id="cxCe" role="alert"></p><div class="cxbar"><textarea id="cxCt" maxlength="300" rows="1" placeholder="' + (cxReply ? 'আপনার উত্তর লিখুন...' : 'কমেন্ট লিখুন') + '" aria-label="কমেন্ট"></textarea><button class="cxsend" data-cx="cm-send" aria-label="পাঠান"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M2 21l21-9L2 3v7l15 2-15 2z"/></svg></button></div></div>';
 }
 async function cxOpenCm(id) {
-  cxCur = id; cxCms = []; cxReply = null; openSheet(cxSheetHtml()); const f = SFB();
-  try { const q = await f.collection('posts/' + id + '/comments').orderBy('at', 'desc').limit(200).get(); cxCms = q.docs.map((d) => Object.assign({ id: d.id }, d.data())); } catch (e) { cxCms = null; }
+  cxCur = id; cxCms = []; cxReply = null; openSheet(cxSheetHtml()); const f = await cxFs();
+  try { const q = await f.collection('posts/' + id + '/comments').orderBy('at', 'desc').limit(200).get(); cxCms = q.docs.map((d) => Object.assign({ id: d.id }, d.data())); } catch (e) { cxCms = null; cxErr = e; }
   const sh = $('#sheet'); if (sh && sh.querySelector('.cxsheet') && cxCur === id) openSheet(cxSheetHtml());
 }
 async function cxCmSend() {
   const err = (m) => { const e = $('#cxCe'); if (e) e.textContent = m; };
   const t = (($('#cxCt') || {}).value || '').trim(); if (!t) return err('মন্তব্য লিখুন');
-  const f = SFB(); if (!f || !cxCur) return err('ইন্টারনেট সংযোগ নেই'); const a = getAcct(); const id = cxCur;
+  const f = await cxFs(); if (!f || !cxCur) return err('ইন্টারনেট সংযোগ নেই' + cxWhy()); const a = getAcct(); const id = cxCur;
   const c = { name: (a && a.name) || 'অতিথি পাঠক', uid: cxMe, text: t.slice(0, 300), at: Date.now() }; if (cxReply) { c.rp = cxReply.id; c.rn = cxReply.n; }
   try {
     const ref = await f.collection('posts/' + id + '/comments').add(c); f.doc('posts/' + id).update({ cmts: SINC(1) }).catch(() => {});
     c.id = ref.id; if (!cxCms) cxCms = []; cxCms.unshift(c); const p = cxPosts.find((x) => x.id === id); if (p) p.cmts = (p.cmts || 0) + 1;
     const my = cxMyCm(); my.unshift({ pid: id, cid: ref.id, text: c.text, at: c.at, pt: ((p && p.text) || '').slice(0, 60) }); store.set('jp_mycm', my.slice(0, 300));
     cxReply = null; cxDraw(); openSheet(cxSheetHtml()); toast('মন্তব্য যোগ হয়েছে');
-  } catch (e) { err('মন্তব্য পাঠানো যায়নি'); }
+  } catch (e) { err('মন্তব্য পাঠানো যায়নি' + cxWhy(e)); }
 }
 function cxCmDel(pid, cid, after) {
   confirmDel('মন্তব্য মুছবেন?', 'এই মন্তব্যটি মুছে যাবে।', async () => {
