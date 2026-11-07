@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#121212">
 <meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<link rel="preconnect" href="https://www.gstatic.com" crossorigin><link rel="preconnect" href="https://firestore.googleapis.com"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Noto+Serif+Bengali:wght@400;700&family=Tiro+Bangla&display=swap">
+<link rel="preload" as="script" href="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js" crossorigin><link rel="preload" as="script" href="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js" crossorigin><link rel="prefetch" as="script" href="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js" crossorigin><link rel="preconnect" href="https://www.gstatic.com" crossorigin><link rel="preconnect" href="https://firestore.googleapis.com"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Noto+Serif+Bengali:wght@400;700&family=Tiro+Bangla&display=swap" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Noto+Serif+Bengali:wght@400;700&family=Tiro+Bangla&display=swap"></noscript>
 <title>যাত্রাপথ বাংলা উপন্যাস</title>
 <link rel="icon" type="image/png" href="icon-192.png"><link rel="apple-touch-icon" href="icon-192.png"><link rel="manifest" href="manifest.webmanifest">
 <style>/* ===== যাত্রাপথ — স্টাইল (গল্পনীড় ডিজাইন অনুসরণে; অধ্যায় লাল) ===== */
@@ -1653,8 +1653,14 @@ const withTimeout = (p, ms) => new Promise((ok, no) => { const t = setTimeout(()
 function ensure() {
   if (db && Date.now() - T0 < 60000) return Promise.resolve();
   if (typeof navigator !== 'undefined' && navigator.onLine === false) { if (db) return Promise.resolve(); if (snapLoad()) return Promise.resolve(); return Promise.reject(new Error('network offline')); }
-  LP = LP || withTimeout(loadDb(), 15000).finally(() => { LP = null; });
-  return LP.catch((e) => { if (db) return; if (snapLoad()) return; throw e; });
+  const refresh = () => { LP = LP || withTimeout(loadDb(), 20000).finally(() => { LP = null; }); return LP; };
+  /* ফোনে আগের ডাটা থাকলে সঙ্গে সঙ্গে সেটাই দেখাই, নতুন ডাটা ব্যাকগ্রাউন্ডে আনি (অপেক্ষা নেই) */
+  if (db || snapLoad()) {
+    const had = !!window.__swrDone; window.__stale = false; T0 = Date.now() - 45000;
+    refresh().then(() => { if (!had || true) { window.__swrDone = true; try { if (curPath === '/' && window.scrollY < 80 && !document.body.classList.contains('reading') && !document.getElementById('wMod')) route(); } catch (e) { /* ignore */ } } }).catch(() => { window.__stale = true; });
+    return Promise.resolve();
+  }
+  return refresh();
 }
 async function handle(method, full, body, user) {
   uid0 = user; await ensure(); const p = new URL(full, 'http://x').pathname; let r, b;
@@ -1954,7 +1960,7 @@ function wLoadScript(urls) {
 const wCdn = (n) => ['https://www.gstatic.com/firebasejs/10.12.2/firebase-' + n + '-compat.js', 'https://cdn.jsdelivr.net/npm/firebase@10.12.2/firebase-' + n + '-compat.js'];
 let wAuthP = null;
 /* রাইটার প্যানেল দ্রুত খুলতে: অ্যাপ চালুর কিছু পরে অবসরে Auth স্ক্রিপ্ট আগেই নামিয়ে রাখা */
-setTimeout(() => { try { if (window.firebase && firebase.initializeApp && !firebase.auth && !wAuthP) { wAuthP = wLoadScript(wCdn('auth')); wAuthP.catch(() => { wAuthP = null; }); } } catch (e) { /* ignore */ } }, 4000);
+setTimeout(() => { try { if (window.firebase && firebase.initializeApp && !firebase.auth && !wAuthP) { wAuthP = wLoadScript(wCdn('auth')); wAuthP.catch(() => { wAuthP = null; }); } } catch (e) { /* ignore */ } }, 1200);
 async function wInit() {
   if (WR.ready) return WR.ready;
   WR.ready = (async () => {
@@ -2095,6 +2101,7 @@ async function wNotif() {
   const inn = a.docs.map((d) => d.data()), out = b.docs.map((d) => d.data()), iS = new Set(inn.map((x) => x.from)), oS = new Set(out.map((x) => x.to));
   const row = async (uid, nm, txt, btns) => { const p = await wProf(uid); return '<div class="wrow" style="cursor:default">' + wAv(p) + '<div class="in"><b>' + esc(p.name || nm || 'লেখক') + '</b><small style="white-space:normal">' + txt + '</small><div class="wrb">' + btns + '</div></div></div>'; };
   let h = '';
+  await Promise.all(inn.map((x) => wProf(x.from)).concat(out.map((x) => wProf(x.to))));
   for (const x of inn.filter((x) => !oS.has(x.from)).sort((p, q) => q.at - p.at)) h += await row(x.from, x.fn, 'ফ্রেন্ড রিকুয়েস্ট এসেছে, একসেপ্ট করুন এবং মেসেজ পাঠান', '<button class="pr" data-wm="accept" data-u="' + esc(x.from) + '">একসেপ্ট করুন</button><button class="dg" data-wm="decline" data-u="' + esc(x.from) + '">বাদ দিন</button>');
   for (const x of out.filter((x) => !iS.has(x.to))) h += await row(x.to, '', 'ফলো অনুরোধ পাঠানো হয়েছে — ফলো ব্যাকের অপেক্ষায়', '<button data-wm="cancel" data-u="' + esc(x.to) + '">অনুরোধ বাতিল</button>');
   for (const x of inn.filter((x) => oS.has(x.from))) h += await row(x.from, x.fn, 'আপনারা এখন বন্ধু', '<button class="pr" data-wm="chat" data-u="' + esc(x.from) + '">মেসেজ পাঠান</button>');
@@ -2117,6 +2124,7 @@ async function wInboxBody() {
   const iS = new Set(a.docs.map((d) => d.data().from)), fr = b.docs.map((d) => d.data().to).filter((u) => iS.has(u));
   const pins = wPins(), pk = (x) => pins.indexOf(x.users.find((y) => y !== me)) >= 0 ? 1 : 0;
   const chats = c.docs.map((d) => d.data()).filter((x) => x.last && (x.lastAt || 0) > wClrGet(wCid(me, x.users.find((y) => y !== me)))).sort((p, q) => (pk(q) - pk(p)) || ((q.lastAt || 0) - (p.lastAt || 0))), has = new Set(); let h = '';
+  await Promise.all(chats.map((x) => wProf(x.users.find((y) => y !== me))));
   for (const x of chats) { const u = x.users.find((y) => y !== me); has.add(u); const p = await wProf(u), n = (x.unread || {})[me] || 0; h += '<div class="wrow" data-wm="chat" data-u="' + esc(u) + '">' + wAv(p) + '<div class="in"><b>' + (pins.indexOf(u) >= 0 ? '📌 ' : '') + esc(p.name || 'লেখক') + '</b><small>' + (x.lastFrom === me ? 'আপনি: ' : '') + esc(x.last) + '</small></div><div class="tm">' + wTm(x.lastAt) + (n ? '<br><span class="un">' + bn(n) + '</span>' : '') + '</div></div>'; }
   let f = ''; for (const u of fr.filter((u) => !has.has(u))) { const p = await wProf(u); f += '<div class="wrow" data-wm="chat" data-u="' + esc(u) + '">' + wAv(p) + '<div class="in"><b>' + esc(p.name || 'লেখক') + '</b><small>মেসেজ শুরু করুন</small></div></div>'; }
   let wr = ''; try { const ps = await WR.fs.collection('profiles').limit(40).get(); wr = ps.docs.filter((d) => d.id !== me && (d.data().name || '').trim()).map((d) => { const x = d.data(); wPC[d.id] = wPC[d.id] || x; return '<button class="wst" data-wm="open" data-u="' + esc(d.id) + '" data-n="' + esc(x.name || '') + '">' + wAv(x) + '<span>' + esc(x.name || 'লেখক') + '</span></button>'; }).join(''); } catch (e) { /* ignore */ }
@@ -2176,7 +2184,7 @@ async function viewBlocked() {
   try { await withWTimeout(wInit(), 12000); } catch (e) { return hp + '<main class="page"><div class="empty">' + esc(wErr(e)) + '</div></main>'; }
   if (!WR.user) return hp + '<main class="page"><div class="empty">ব্লক তালিকা দেখতে লেখক প্যানেলে লগইন করুন।<br><br><button class="btn pur" data-act="go" data-href="/w">লগইন করুন</button></div></main>';
   const q = await WR.fs.collection('blocks').where('by', '==', wMe()).get(); let h = '';
-  for (const d of q.docs.sort((a, b) => (b.data().at || 0) - (a.data().at || 0))) { const u = d.data().target, p = await wProf(u); h += '<div class="wrow" style="cursor:default">' + wAv(p) + '<div class="in"><b>' + esc(p.name || 'লেখক') + '</b><small>ব্লক করা আছে</small></div><div class="wrb" style="margin:0"><button class="pr" data-wm="unblock" data-u="' + esc(u) + '">আনব্লক</button></div></div>'; }
+  await Promise.all(q.docs.map((d) => wProf(d.data().target))); for (const d of q.docs.sort((a, b) => (b.data().at || 0) - (a.data().at || 0))) { const u = d.data().target, p = await wProf(u); h += '<div class="wrow" style="cursor:default">' + wAv(p) + '<div class="in"><b>' + esc(p.name || 'লেখক') + '</b><small>ব্লক করা আছে</small></div><div class="wrb" style="margin:0"><button class="pr" data-wm="unblock" data-u="' + esc(u) + '">আনব্লক</button></div></div>'; }
   return hp + '<main class="page">' + (h || '<div class="empty">কোনো লেখককে ব্লক করা নেই।</div>') + '</main>';
 }
 /* ---- চ্যাট ---- */
@@ -4686,6 +4694,7 @@ function boot() {
   startTimeTracker();
   initExitGuard();
   route(); offCheck(); initReminder();
+  setTimeout(() => { try { if (navigator.onLine !== false && store.get('jp_wemail') && typeof wInit === 'function') wInit().catch(() => {}); } catch (e) { /* ignore */ } }, 1500);
   const wait = Math.max(300, 2800 - (Date.now() - (window.__t0 || Date.now())));
   adInit();
   setTimeout(() => { const s = $('#splash'); if (s) { s.classList.add('hide'); setTimeout(() => s.remove(), 400); } if (!AD.opened) { AD.opened = true; setTimeout(() => { AD.last = 0; adShow('open', 0); }, 700); } }, wait);
