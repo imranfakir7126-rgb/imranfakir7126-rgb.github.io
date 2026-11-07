@@ -1130,8 +1130,10 @@ i.wbdg.on{display:block}.icon-btn.wbell{position:relative}
 .wtg:checked{background:var(--pur);border-color:var(--pur)}.wtg:checked:before{left:25px;background:var(--bubfg,#fff)}.wtg:disabled{opacity:.5}
 .wtgr{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:18px 0 0}.wtgr b{display:block;font-size:17px}.wtgr small{display:block;color:var(--muted);font-size:13.5px;line-height:1.5;margin-top:2px}
 .wcats{display:flex;flex-wrap:wrap;gap:10px;margin:6px 0 4px}.wcats button{border:1.5px solid var(--line);border-radius:999px;padding:10px 18px;font-size:15px;font-weight:600;background:transparent;color:var(--text)}.wcats button.on{background:var(--pur);color:var(--bubfg,#fff);border-color:transparent}
-.wdecl{display:flex;gap:14px;align-items:flex-start;margin:20px 0 6px;line-height:1.6;font-size:15.5px}.wdecl input{width:24px;height:24px;flex:0 0 auto;margin-top:2px;accent-color:var(--pur)}
+.wdecl{display:flex;gap:14px;align-items:flex-start;margin:22px 0 10px;line-height:1.65;font-size:15.5px;font-weight:600;background:var(--card);border:2px solid var(--pur);border-radius:16px;padding:16px}.wdecl input{width:24px;height:24px;flex:0 0 auto;margin-top:2px;accent-color:var(--pur)}
 .wrules h3{font-size:20px;margin:22px 0 8px}.wrules ul{margin:0;padding-left:22px}.wrules li{margin:0 0 10px;line-height:1.75;font-size:16px}.wrules .mt{color:var(--muted);font-size:14px}
+.wsts{display:flex;gap:14px;overflow-x:auto;padding:4px 2px 14px;margin:0 -2px 6px;scrollbar-width:none}.wsts::-webkit-scrollbar{display:none}.wst{flex:0 0 auto;width:74px;display:flex;flex-direction:column;align-items:center;gap:6px;font-size:13px;color:var(--muted);font-weight:600}.wst .wav2{width:62px;height:62px;font-size:24px;border:2px solid var(--pur)}.wst span:last-child{max-width:74px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hdr.wch{position:fixed;left:0;right:0;top:0;max-width:720px;margin:0 auto;z-index:45}.page.wchp{padding-top:64px}
 .wtbar{display:flex;align-items:center;gap:10px;padding:8px 10px}.wtbar button{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;color:var(--pur-soft)}.wtbar button svg{width:24px;height:24px}
 .wemp{background:var(--card);border-top:1px solid var(--line);padding:6px 10px 12px;max-height:38vh;overflow:auto}.wemp .eh{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:14px;padding:6px 4px}
 .wemp .eg{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}.wemp .eg button{font-size:28px;padding:8px 0;border-radius:10px}
@@ -1176,7 +1178,7 @@ i.wbdg.on{display:block}.icon-btn.wbell{position:relative}
 .wmod>div{background:var(--card);color:var(--text);border:1px solid var(--line);border-radius:26px;padding:22px;width:100%;max-width:380px;text-align:center}
 .wlk .lkh{display:flex;gap:10px;align-items:center;justify-content:center;margin-bottom:14px}.wlk .wav2{width:64px;height:64px;font-size:26px}
 .wlk p{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:12px;text-align:left;line-height:1.7;font-size:14.5px}.wlk .lkb{display:flex;gap:10px;justify-content:flex-end}
-.wmenu button{display:block;width:100%;text-align:left;padding:14px 8px;font-weight:600;border-bottom:1px solid var(--line)}
+.wmenu button{display:flex;align-items:center;gap:14px;width:100%;text-align:left;padding:14px 8px;font-weight:600;border-bottom:1px solid var(--line)}.wmenu button svg{flex:0 0 auto;margin:0!important}
 .cxbar{display:flex;gap:8px;align-items:flex-end;margin-top:8px}.cxbar textarea{flex:1;min-height:44px;max-height:100px;resize:none;border:1px solid var(--line);background:var(--card2);color:var(--text);border-radius:22px;padding:11px 16px;outline:0}
 .cxsend{width:44px;height:44px;border-radius:50%;background:var(--pur);color:var(--bubfg,#fff);display:grid;place-items:center;flex:0 0 auto}
 .nav .ico{position:relative}
@@ -2052,10 +2054,11 @@ async function wInboxBody() {
   const chats = c.docs.map((d) => d.data()).filter((x) => x.last && (x.lastAt || 0) > wClrGet(wCid(me, x.users.find((y) => y !== me)))).sort((p, q) => (pk(q) - pk(p)) || ((q.lastAt || 0) - (p.lastAt || 0))), has = new Set(); let h = '';
   for (const x of chats) { const u = x.users.find((y) => y !== me); has.add(u); const p = await wProf(u), n = (x.unread || {})[me] || 0; h += '<div class="wrow" data-wm="chat" data-u="' + esc(u) + '">' + wAv(p) + '<div class="in"><b>' + (pins.indexOf(u) >= 0 ? '📌 ' : '') + esc(p.name || 'লেখক') + '</b><small>' + (x.lastFrom === me ? 'আপনি: ' : '') + esc(x.last) + '</small></div><div class="tm">' + wTm(x.lastAt) + (n ? '<br><span class="un">' + bn(n) + '</span>' : '') + '</div></div>'; }
   let f = ''; for (const u of fr.filter((u) => !has.has(u))) { const p = await wProf(u); f += '<div class="wrow" data-wm="chat" data-u="' + esc(u) + '">' + wAv(p) + '<div class="in"><b>' + esc(p.name || 'লেখক') + '</b><small>মেসেজ শুরু করুন</small></div></div>'; }
-  return (h || '') + (f ? '<h2 class="wh2">বন্ধু</h2>' + f : '') + (h || f ? '' : '<div class="wgate"><div class="big">💬</div><p>এখনো কোনো বন্ধু নেই। কোনো লেখককে ফলো করুন — তিনি ফলো ব্যাক করলে এখানে মেসেজ করতে পারবেন।</p></div>');
+  let wr = ''; try { const ps = await WR.fs.collection('profiles').limit(40).get(); wr = ps.docs.filter((d) => d.id !== me && (d.data().name || '').trim()).map((d) => { const x = d.data(); wPC[d.id] = wPC[d.id] || x; return '<button class="wst" data-wm="open" data-u="' + esc(d.id) + '" data-n="' + esc(x.name || '') + '">' + wAv(x) + '<span>' + esc(x.name || 'লেখক') + '</span></button>'; }).join(''); } catch (e) { /* ignore */ }
+  return (wr ? '<div class="wsts">' + wr + '</div>' : '') + (h || '') + (f ? '<h2 class="wh2">বন্ধু</h2>' + f : '') + (h || f ? '' : '<div class="wgate"><div class="big">💬</div><p>এখনো কোনো বন্ধু নেই। কোনো লেখককে ফলো করুন — তিনি ফলো ব্যাক করলে এখানে মেসেজ করতে পারবেন।</p></div>');
 }
 
-async function wInbox() { return wPage('মেসেজ', await wInboxBody(), 'msg', false, '<button class="icon-btn wbell" data-w="go" data-href="/w/notif" aria-label="নোটিফিকেশন">' + WI.bell + '<i class="wbdg" data-k="req"></i></button>'); }
+async function wInbox() { return wPage('মেসেজ', await wInboxBody(), null, true, '<button class="icon-btn wbell" data-w="go" data-href="/w/notif" aria-label="নোটিফিকেশন">' + WI.bell + '<i class="wbdg" data-k="req"></i></button>'); }
 async function viewMsgTab() {
   const hd = (r) => '<header class="hdr"><div class="hdr-row"><div class="hdr-title"><span>মেসেজ</span></div>' + (r || '') + '</div></header>';
   const gate = (t, btn) => hd() + '<main class="page"><div class="wgate" style="padding:40px 10px;text-align:center"><div class="big" style="font-size:46px">💬</div><p style="line-height:1.8">' + t + '</p>' + btn + '</div></main>';
@@ -2083,7 +2086,7 @@ const W_BUB = [['', 'ডিফল্ট'], ['1', 'সমুদ্র'], ['2', '�
 const wBubGet = (cid) => store.get('jp_wbub_' + cid, '') || '';
 const wClrGet = (cid) => +store.get('jp_wclr_' + cid, 0) || 0;
 let wReply = null, wLP = null, wLPd = 0; const wMsgs = {};
-function wChHead(p, right) { return '<header class="hdr"><div class="hdr-row"><button class="icon-btn" data-act="back" aria-label="পেছনে" data-i="back"></button><div class="hdr-title" style="display:flex;align-items:center;gap:10px;min-width:0">' + wAv(p).replace('class="wav2"', 'class="wav2" style="width:38px;height:38px;font-size:16px"') + '<span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + esc(p.name || 'লেখক') + '</span></div>' + (right || '') + '</div></header>'; }
+function wChHead(p, right) { return '<header class="hdr wch"><div class="hdr-row"><button class="icon-btn" data-act="back" aria-label="পেছনে" data-i="back"></button><div class="hdr-title" style="display:flex;align-items:center;gap:10px;min-width:0">' + wAv(p).replace('class="wav2"', 'class="wav2" style="width:38px;height:38px;font-size:16px"') + '<span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + esc(p.name || 'লেখক') + '</span></div>' + (right || '') + '</div></header>'; }
 function wRenderMsgs(s, me) {
   const box = document.getElementById('wChBox'), on = box.dataset.n || 'লেখক'; const clr = wClrGet(box.dataset.c);
   box.dataset.bub = wBubGet(box.dataset.c);
@@ -2121,7 +2124,7 @@ async function wChat(uid) {
   const foot = ok ? '<div class="wlock2"><div class="wrpb" id="wRpBar" hidden></div><div class="wcmp2"><button data-wm="imgsheet" aria-label="ছবি">' + XI.img + '</button><button data-wm="emo" id="wEmoBtn" aria-label="ইমোজি">' + XI.smile + '</button><textarea id="wChT" rows="1" maxlength="1000" placeholder="একটি বার্তা লিখুন..."></textarea><button class="sd" data-wm="send" aria-label="পাঠান">' + WI.send + '</button></div><div class="wemp" id="wEmp" hidden></div><input type="file" id="wChImg" accept="image/*" hidden></div>'
     : '<div class="wlock2">' + (r.iBlock ? 'আপনি এই লেখককে ব্লক করেছেন<button data-wm="unblock" data-u="' + esc(uid) + '">আনব্লক</button>' : r.heBlock ? 'এই লেখক আপনাকে মেসেজ পাঠানোর অনুমতি দেননি' : 'মেসেজ পাঠাতে উভয়কে একে অপরকে ফলো করতে হবে') + '</div>';
   if (ok) wChatBind(cid, uid);
-  return head + '<main class="page"><div class="wchl" id="wChBox" data-c="' + cid + '" data-n="' + esc(p.name || 'লেখক') + '" data-u="' + esc(uid) + '" data-bub="' + wBubGet(cid) + '"></div></main>' + foot;
+  return head + '<main class="page wchp"><div class="wchl" id="wChBox" data-c="' + cid + '" data-n="' + esc(p.name || 'লেখক') + '" data-u="' + esc(uid) + '" data-bub="' + wBubGet(cid) + '"></div></main>' + foot;
 }
 function wChatBind(cid) {
   let n = 0; (function t() {
@@ -2195,6 +2198,7 @@ document.addEventListener('click', async (ev) => {
 
 /* ---- রাউটার ---- */
 async function viewWriter(seg) {
+  if (seg[1] === 'rules') return wRules();
   try { await withWTimeout(wInit(), 20000); } catch (e) { return wPage('লেখক প্যানেল', '<div class="wgate"><div class="big">📡</div><p>' + esc(wErr(e)) + '</p><button class="wbtn" data-w="retry">আবার চেষ্টা করুন</button></div>', null, true); }
   try { const pd = await WR.fs.doc('config/perms').get(); WR.perms = pd.exists ? pd.data() : {}; } catch (e) { WR.perms = WR.perms || {}; }
   const s1 = seg[1] || ''; 
@@ -2391,7 +2395,7 @@ async function wSyncBook(E, mode, f) {
 }
 /* ---- গল্প যোগ/সম্পাদনা ---- */
 let wCover = null;
-const WRULES_V = 2, wRulesOk = () => store.get('jp_wrules_' + wMe(), 0) === WRULES_V;
+const WRULES_V = 2, wRulesOk = () => !!(WR.user && store.get('jp_wrules_' + WR.user.uid, 0) === WRULES_V);
 function wRules() {
   const ok = wRulesOk(), li = (a) => '<ul>' + a.map((x) => '<li>' + x + '</li>').join('') + '</ul>';
   const body = '<div class="wrules"><p class="mt">সংস্করণ ' + bn(WRULES_V) + '</p><p style="line-height:1.8">যাত্রাপথে প্রথম গল্প জমা দেওয়ার আগে প্রত্যেক লেখককে এই নিয়মাবলিতে সম্মতি দিতে হবে। নিয়ম বদলালে নতুন সংস্করণে আবার সম্মতি চাওয়া হবে।</p>' +
@@ -2400,8 +2404,8 @@ function wRules() {
     '<h3>৩. মানুষের প্রতি সম্মান</h3>' + li(['ধর্ম, জাতি, লিঙ্গ, প্রতিবন্ধিতা বা অন্য কোনো পরিচয়ের কারণে ঘৃণা ছড়ানো লেখা চলবে না।', 'বাস্তব কোনো মানুষকে হয়রানি, অপমান বা তাঁর নামে মিথ্যা অভিযোগ করা যাবে না; কারও ব্যক্তিগত তথ্য প্রকাশ করা যাবে না।']) +
     '<h3>৪. থ্রিলার ও ভৌতিক গল্পে সহিংসতা</h3>' + li(['কাহিনির প্রয়োজনে অপরাধ, রহস্য, ভয় ও সহিংসতা থাকতে পারে।', 'বাস্তব সহিংসতার প্রশংসা, উস্কানি বা বিপজ্জনক কাজের নির্দেশনা দেওয়া যাবে না।']) +
     '<h3>৫. নিয়ম ভাঙলে</h3>' + li(['নিয়ম ভাঙলে পর্ব বা গল্প সরিয়ে দেওয়া হতে পারে। বারবার ভাঙলে লেখক অ্যাকাউন্ট বন্ধ হবে।']) + '</div>' +
-    (ok ? '<p class="wnote">আপনি এই নিয়মাবলিতে সম্মতি দিয়েছেন।</p>' : '<label class="wdecl"><input type="checkbox" id="wRulesCk"><span>আমি লেখার নিয়মাবলি পড়েছি এবং এতে সম্মতি দিচ্ছি।</span></label><div class="werr" id="wErr" role="alert"></div><button class="wbtn" data-w="rules-ok">সম্মতি দিয়ে এগোন</button>');
-  return wPage('লেখার নিয়মাবলি', body, null, true);
+    (ok ? '<p class="wnote">আপনি এই নিয়মাবলিতে সম্মতি দিয়েছেন।</p>' : !WR.user ? '' : '<label class="wdecl"><input type="checkbox" id="wRulesCk"><span>আমি লেখার নিয়মাবলি পড়েছি এবং এতে সম্মতি দিচ্ছি।</span></label><div class="werr" id="wErr" role="alert"></div><button class="wbtn" data-w="rules-ok">সম্মতি দিয়ে এগোন</button>');
+  return headerPage('লেখার নিয়মাবলি', true) + '<main class="page wp">' + body + '</main>';
 }
 async function wBookForm(id) {
   if (!id && !wRulesOk()) return wRules();
@@ -4222,7 +4226,7 @@ function viewProfile() {
     mrow('folder', 'ডাউনলোড স্টোরেজ', fmtSize(storageSize()) + ' ব্যবহৃত', '', 'data-act="noop"') +
     mrow('trash', 'সব ডাউনলোড মুছুন', 'ফাইল + ডাউনলোড তালিকা', '', 'data-act="clear-dl"') + '</div>' +
     '<div class="grp">অন্যান্য</div><div class="pcard" style="padding:4px 12px">' +
-    mrow('info', 'অ্যাপ সম্পর্কে', '', '', 'data-act="go" data-href="/about"') + mrow('chat', 'যোগাযোগ করুন', '', '', 'data-act="go" data-href="/contact"') + mrow('info', 'প্রাইভেসি পলিসি', '', '', 'data-act="go" data-href="/privacy"') +
+    mrow('info', 'অ্যাপ সম্পর্কে', '', '', 'data-act="go" data-href="/about"') + mrow('chat', 'যোগাযোগ করুন', '', '', 'data-act="go" data-href="/contact"') + mrow('info', 'প্রাইভেসি পলিসি', '', '', 'data-act="go" data-href="/privacy"') + mrow('pen', 'লেখার নিয়মাবলি', '', '', 'data-act="go" data-href="/w/rules"') +
     '<div class="ver"><span>ভার্সন</span><span>' + bn('2.1') + '</span></div></div>' +
     '<div class="center" style="margin-top:14px;font-weight:600">আমাদের সাথে যুক্ত থাকুন</div><div class="social"><button class="icon-btn" style="background:#1fa855;color:#fff;width:48px;height:48px" data-act="wa" aria-label="হোয়াটসঅ্যাপ">' + IC.wa + '</button></div></main>';
 }
